@@ -1,2 +1,3 @@
 .~lock.*#
+*.swp
 frontend/node_modules
