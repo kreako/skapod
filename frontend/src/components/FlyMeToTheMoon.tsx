@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useQuery } from "react-query"
 import axios from "axios"
 import SoundWaveCanvas from "./SoundWaveCanvas"
@@ -66,6 +66,13 @@ export default function FlyMeToTheMoon() {
     }
   }, [audioRef, query.isSuccess, query.data])
 
+  const [progress, setProgress] = useState(0)
+
+  const audioTimeUpdate = () => {
+    if (audioRef.current) {
+      setProgress(audioRef.current.currentTime)
+    }
+  }
   return (
     <div className="flex flex-col space-y-4">
       <div>url: {query.isSuccess && query.data.url.toString()}</div>
@@ -75,14 +82,19 @@ export default function FlyMeToTheMoon() {
       </div>
       <figure>
         <figcaption>Listen to Frank or Pomme:</figcaption>
-        <audio ref={audioRef} controls className="w-full">
+        <audio
+          ref={audioRef}
+          controls
+          className="w-full"
+          onTimeUpdate={audioTimeUpdate}
+        >
           Your browser does not support the
           <code>audio</code> element.
         </audio>
       </figure>
       <div className="w-full h-48 border border-sky-700">
         <SoundWaveCanvas
-          progress={10}
+          progress={progress}
           total={query.isSuccess ? query.data.duration : 100}
           ready={query.isSuccess}
           lower={query?.data?.soundProfile?.lower}
