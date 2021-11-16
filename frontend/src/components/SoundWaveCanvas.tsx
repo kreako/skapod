@@ -1,11 +1,14 @@
 import { useEffect, useRef } from "react"
 import colors from "tailwindcss/colors"
 
-function DefaultSoundWave() {
+type DefaultSoundWaveProps = {
+  className: string
+}
+
+function DefaultSoundWave({ className }: DefaultSoundWaveProps) {
   return (
-    // TODO h-48 hard coded here
     <svg
-      className="fill-current text-sky-700 h-48 w-full"
+      className={`fill-current text-sky-700 ${className}`}
       viewBox="0 0 264.58332 50.800001"
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="none"
@@ -32,12 +35,36 @@ const getPixelRatio = (context) => {
   return (window.devicePixelRatio || 1) / backingStore
 }
 
+const resizeWithPixelRatio = (canvas, ctx) => {
+  // init width/height of the canvas taking pixel ratio
+  // First get the ratio
+  const ratio = getPixelRatio(ctx)
+  // Current width/height from canvas computed style (slice because gives "1234px")
+  const width = Number(
+    getComputedStyle(canvas).getPropertyValue("width").slice(0, -2)
+  )
+  const height = Number(
+    getComputedStyle(canvas).getPropertyValue("height").slice(0, -2)
+  )
+  // Set canvas width/height
+  canvas.width = width * ratio
+  canvas.height = height * ratio
+  // Reset canvas style width/height
+  canvas.style.width = `${width}px`
+  canvas.style.height = `${height}px`
+}
+
 type ReadySoundWaveCanvasProps = {
   lower: number[]
   upper: number[]
+  className: string
 }
 
-function ReadySoundWaveCanvas({ lower, upper }: ReadySoundWaveCanvasProps) {
+function ReadySoundWaveCanvas({
+  lower,
+  upper,
+  className,
+}: ReadySoundWaveCanvasProps) {
   let canvasRef = useRef<HTMLCanvasElement>()
 
   if (lower.length !== upper.length) {
@@ -55,22 +82,8 @@ function ReadySoundWaveCanvas({ lower, upper }: ReadySoundWaveCanvasProps) {
     const canvas = canvasRef.current
     const ctx = canvas.getContext("2d")
 
-    // init width/height of the canvas taking pixel ratio
-    // First get the ratio
-    const ratio = getPixelRatio(ctx)
-    // Current width/height from canvas computed style (slice because gives "1234px")
-    const width = Number(
-      getComputedStyle(canvas).getPropertyValue("width").slice(0, -2)
-    )
-    const height = Number(
-      getComputedStyle(canvas).getPropertyValue("height").slice(0, -2)
-    )
-    // Set canvas width/height
-    canvas.width = width * ratio
-    canvas.height = height * ratio
-    // Reset canvas style width/height
-    canvas.style.width = `${width}px`
-    canvas.style.height = `${height}px`
+    // Set width/height taking pixel ratio in account
+    resizeWithPixelRatio(canvas, ctx)
 
     // Now for the drawing
     // clear the whole thing
@@ -103,31 +116,99 @@ function ReadySoundWaveCanvas({ lower, upper }: ReadySoundWaveCanvasProps) {
   // Here I could have made a fallback image inside but this is not really
   // necessary, if this browser doesn't support canvas, it won't be able
   // to execute this app anyway
-  return (
-    // TODO h-48 hard coded here
-    <canvas ref={canvasRef} className="w-full h-48 border border-sky-700" />
-  )
+  return <canvas ref={canvasRef} className={className} />
+}
+
+type SoundWaveProgressCanvasProps = {
+  progress: number
+  total: number
+  className: string
+}
+
+function SoundWaveProgressCanvas({
+  progress,
+  total,
+  className,
+}: SoundWaveProgressCanvasProps) {
+  let canvasRef = useRef<HTMLCanvasElement>()
+
+  useEffect(() => {
+    if (!canvasRef.current) {
+      return
+    }
+
+    // canvas/context accessors
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext("2d")
+
+    // Set width/height taking pixel ratio in account
+    resizeWithPixelRatio(canvas, ctx)
+
+    // Now for the drawing
+    // clear the whole thing
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    // global alpha
+    ctx.globalAlpha = 0.8
+
+    // Compute where progress bar is on canvas width
+    const x_progress = (progress * canvas.width) / total
+
+    // Set the color
+    ctx.fillStyle = colors.sky[300]
+
+    // rectangle/marker width
+    // TODO maybe a % of canvas width ?
+    const markerWidth = 20
+
+    // Draw the rectangle/marker
+    ctx.fillRect(x_progress - markerWidth / 2, 0, markerWidth, canvas.height)
+  }, [canvasRef, progress, total])
+
+  // Here I could have made a fallback image inside but this is not really
+  // necessary, if this browser doesn't support canvas, it won't be able
+  // to execute this app anyway
+  return <canvas ref={canvasRef} className={className} />
 }
 
 type SoundWaveCanvasProps = {
+  progress: number
+  total: number
   ready: boolean
   lower: number[]
   upper: number[]
 }
 
 export default function SoundWaveCanvas({
+  progress,
+  total,
   ready,
   lower,
   upper,
 }: SoundWaveCanvasProps) {
   return (
-    // TODO h-48 hard coded here
-    <div className="w-full h-48 border border-sky-700">
-      {ready ? (
-        <ReadySoundWaveCanvas lower={lower} upper={upper} />
-      ) : (
-        <DefaultSoundWave />
-      )}
+    <div>
+      {/* TODO h-48 hard coded here */}
+      <div className="w-full h-48 border border-sky-700 relative">
+        <div className="absolute inset-0 h-48">
+          {ready ? (
+            <ReadySoundWaveCanvas
+              lower={lower}
+              upper={upper}
+              className="w-full h-48"
+            />
+          ) : (
+            <DefaultSoundWave className="w-full h-48" />
+          )}
+        </div>
+        <div className="absolute inset-0 h-48">
+          <SoundWaveProgressCanvas
+            progress={progress}
+            total={total}
+            className="w-full h-48"
+          />
+        </div>
+      </div>
     </div>
   )
 }

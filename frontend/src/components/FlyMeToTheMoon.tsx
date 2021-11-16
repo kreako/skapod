@@ -20,6 +20,8 @@ export default function FlyMeToTheMoon() {
       const array = await blob.arrayBuffer()
       const audioContext = new AudioContext()
       const audioBuffer = await audioContext.decodeAudioData(array)
+
+      const duration = audioBuffer.duration
       const rawData = audioBuffer.getChannelData(0)
 
       const samples = 1000
@@ -53,7 +55,7 @@ export default function FlyMeToTheMoon() {
       })
       console.timeEnd("query")
 
-      return { blob, url, soundProfile }
+      return { blob, url, soundProfile, duration }
     },
     { enabled: true }
   )
@@ -80,6 +82,8 @@ export default function FlyMeToTheMoon() {
       </figure>
       <div className="w-full h-48 border border-sky-700">
         <SoundWaveCanvas
+          progress={10}
+          total={query.isSuccess ? query.data.duration : 100}
           ready={query.isSuccess}
           lower={query?.data?.soundProfile?.lower}
           upper={query?.data?.soundProfile?.upper}
