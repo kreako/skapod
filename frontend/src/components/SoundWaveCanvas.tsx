@@ -163,6 +163,11 @@ function SoundWaveProgressCanvas({
 
     // Draw the rectangle/marker
     ctx.fillRect(x_progress - markerWidth / 2, 0, markerWidth, canvas.height)
+
+    // Set the color
+    ctx.fillStyle = colors.sky[700]
+    // And on top a fine line
+    ctx.fillRect(x_progress, 0, 1, canvas.height)
   }, [canvasRef, progress, total])
 
   // Here I could have made a fallback image inside but this is not really
