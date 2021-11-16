@@ -57,7 +57,7 @@ export default function FlyMeToTheMoon() {
 
       return { blob, url, soundProfile, duration }
     },
-    { enabled: true }
+    { enabled: true, staleTime: Infinity }
   )
 
   useEffect(() => {
