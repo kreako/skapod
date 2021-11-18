@@ -73,8 +73,12 @@ export default function FlyMeToTheMoon() {
       setProgress(audioRef.current.currentTime)
     }
   }
+
+  const bears = useStore((state) => state.bears)
+
   return (
     <div className="flex flex-col space-y-4">
+      <div>bears: {bears}</div>
       <div>url: {query.isSuccess && query.data.url.toString()}</div>
       <div>
         soundProfile length:{" "}
