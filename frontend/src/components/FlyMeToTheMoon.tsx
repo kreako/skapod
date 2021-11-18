@@ -2,6 +2,13 @@ import { useEffect, useRef, useState } from "react"
 import { useQuery } from "react-query"
 import axios from "axios"
 import SoundWaveCanvas from "./SoundWaveCanvas"
+import { useStore } from "../store"
+
+const arrayMinMax = (arr: Float32Array) =>
+  arr.reduce(
+    ([min, max], val) => [Math.min(min, val), Math.max(max, val)],
+    [Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]
+  )
 
 export default function FlyMeToTheMoon() {
   let audioRef = useRef<HTMLAudioElement>()
@@ -11,8 +18,8 @@ export default function FlyMeToTheMoon() {
     async () => {
       console.time("query")
       const r = await axios.get(
-        //"http://localhost:3000/src/components/FlyMeToTheMoon.opus",
-        "src/components/PommeSansToi.opus",
+        "src/components/FlyMeToTheMoon.opus",
+        //"src/components/PommeSansToi.opus",
         { responseType: "blob" }
       )
       const blob = r.data
@@ -22,40 +29,20 @@ export default function FlyMeToTheMoon() {
       const audioBuffer = await audioContext.decodeAudioData(array)
 
       const duration = audioBuffer.duration
-      const rawData = audioBuffer.getChannelData(0)
-
-      const samples = 1000
-      const blockSize = Math.floor(rawData.length / samples)
-      const blockNb = Math.ceil(rawData.length / blockSize)
-      const upper = []
-      const lower = []
-      for (let i = 0; i < blockNb; i++) {
-        const slice = rawData.slice(blockSize * i, blockSize * (i + 1))
-        upper.push(Math.max(...slice))
-        lower.push(Math.min(...slice))
+      const datas = []
+      for (let i = 0; i < audioBuffer.numberOfChannels; i++) {
+        const data = audioBuffer.getChannelData(i)
+        const [min, max] = arrayMinMax(data)
+        datas.push({
+          data,
+          min,
+          max,
+        })
       }
-
-      // normalize
-      const max_lower = Math.max(...lower.map((l) => Math.abs(l)))
-      const max_upper = Math.max(...upper.map((l) => Math.abs(l)))
-      console.log({ max_lower, max_upper })
-      const multiplier = Math.pow(Math.max(max_lower, max_upper), -1)
-      console.log({ multiplier })
-      const soundProfile = {
-        upper: upper.map((n) => n * multiplier),
-        lower: lower.map((n) => n * multiplier),
-      }
-      console.log({
-        min: Math.min(...soundProfile.upper),
-        max: Math.max(...soundProfile.upper),
-      })
-      console.log({
-        min: Math.min(...soundProfile.lower),
-        max: Math.max(...soundProfile.lower),
-      })
+      const sampleRate = audioBuffer.sampleRate
       console.timeEnd("query")
 
-      return { blob, url, soundProfile, duration }
+      return { url, datas, duration, sampleRate }
     },
     { enabled: true, staleTime: Infinity }
   )
@@ -80,10 +67,7 @@ export default function FlyMeToTheMoon() {
     <div className="flex flex-col space-y-4">
       <div>bears: {bears}</div>
       <div>url: {query.isSuccess && query.data.url.toString()}</div>
-      <div>
-        soundProfile length:{" "}
-        {query.isSuccess && query.data.soundProfile.upper.length}
-      </div>
+      <div>length: {query.isSuccess && query.data.datas[0].data.length}</div>
       <figure>
         <figcaption>Listen to Frank or Pomme:</figcaption>
         <audio
@@ -101,8 +85,7 @@ export default function FlyMeToTheMoon() {
           progress={progress}
           total={query.isSuccess ? query.data.duration : 100}
           ready={query.isSuccess}
-          lower={query?.data?.soundProfile?.lower}
-          upper={query?.data?.soundProfile?.upper}
+          datas={query?.data?.datas}
         />
       </div>
     </div>

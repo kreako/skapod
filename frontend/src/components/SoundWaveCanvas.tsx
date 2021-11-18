@@ -55,23 +55,12 @@ const resizeWithPixelRatio = (canvas, ctx) => {
 }
 
 type ReadySoundWaveCanvasProps = {
-  lower: number[]
-  upper: number[]
+  datas: SoundWaveCanvasDatasProps[]
   className: string
 }
 
-function ReadySoundWaveCanvas({
-  lower,
-  upper,
-  className,
-}: ReadySoundWaveCanvasProps) {
+function ReadySoundWaveCanvas({ datas, className }: ReadySoundWaveCanvasProps) {
   let canvasRef = useRef<HTMLCanvasElement>()
-
-  if (lower.length !== upper.length) {
-    throw new Error(
-      `Invalid lower/upper length : ${lower.length} !== ${upper.length}`
-    )
-  }
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -89,9 +78,22 @@ function ReadySoundWaveCanvas({
     // clear the whole thing
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
+    // Let's plot only the first channel for now
+    const data = datas[0]?.data
+    const min = datas[0]?.min
+    const max = datas[0]?.max
+
+    // No channel ?
+    if (!data || !min || !max) {
+      return
+    }
+
     // Compute how much 1 sample takes in x direction
     // If I'm still executing here then lower.length === upper.length
-    const x_step = canvas.width / upper.length
+    const x_step = canvas.width / data.length
+
+    // Multiplier for normalisation
+    const multiplier = Math.pow(Math.max(Math.abs(min), Math.abs(max)), -1)
 
     // Set the color
     ctx.fillStyle = colors.sky[700]
@@ -99,19 +101,15 @@ function ReadySoundWaveCanvas({
     // Draw wave form upper
     ctx.beginPath()
     ctx.moveTo(0, canvas.height / 2)
-    for (const [idx, up] of upper.entries()) {
-      ctx.lineTo(idx * x_step, (canvas.height - up * canvas.height) / 2)
+    for (const [idx, d] of data.entries()) {
+      ctx.lineTo(
+        idx * x_step,
+        (canvas.height - d * multiplier * canvas.height) / 2
+      )
+      ctx.lineTo(idx * x_step, canvas.height / 2)
     }
     ctx.fill()
-
-    // Draw wave form lower
-    ctx.beginPath()
-    ctx.moveTo(0, canvas.height / 2)
-    for (const [idx, low] of lower.entries()) {
-      ctx.lineTo(idx * x_step, (canvas.height - low * canvas.height) / 2)
-    }
-    ctx.fill()
-  }, [canvasRef, lower, upper])
+  }, [canvasRef, datas])
 
   // Here I could have made a fallback image inside but this is not really
   // necessary, if this browser doesn't support canvas, it won't be able
@@ -176,20 +174,24 @@ function SoundWaveProgressCanvas({
   return <canvas ref={canvasRef} className={className} />
 }
 
+type SoundWaveCanvasDatasProps = {
+  data: number[]
+  min: number
+  max: number
+}
+
 type SoundWaveCanvasProps = {
   progress: number
   total: number
   ready: boolean
-  lower: number[]
-  upper: number[]
+  datas: SoundWaveCanvasDatasProps[]
 }
 
 export default function SoundWaveCanvas({
   progress,
   total,
   ready,
-  lower,
-  upper,
+  datas,
 }: SoundWaveCanvasProps) {
   return (
     <div>
@@ -197,11 +199,7 @@ export default function SoundWaveCanvas({
       <div className="w-full h-48 border border-sky-700 relative">
         <div className="absolute inset-0 h-48">
           {ready ? (
-            <ReadySoundWaveCanvas
-              lower={lower}
-              upper={upper}
-              className="w-full h-48"
-            />
+            <ReadySoundWaveCanvas datas={datas} className="w-full h-48" />
           ) : (
             <DefaultSoundWave className="w-full h-48" />
           )}
