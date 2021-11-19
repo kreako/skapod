@@ -61,11 +61,12 @@ export default function FlyMeToTheMoon() {
     }
   }
 
-  const bears = useStore((state) => state.bears)
+  const pxPerSeconds = useStore((state) => state.pxPerSeconds)
+  const zoomIn = useStore((state) => state.horizontalZoomIn)
+  const zoomOut = useStore((state) => state.horizontalZoomOut)
 
   return (
     <div className="flex flex-col space-y-4">
-      <div>bears: {bears}</div>
       <div>url: {query.isSuccess && query.data.url.toString()}</div>
       <div>length: {query.isSuccess && query.data.datas[0].data.length}</div>
       <figure>
@@ -87,6 +88,21 @@ export default function FlyMeToTheMoon() {
           ready={query.isSuccess}
           datas={query?.data?.datas}
         />
+      </div>
+      <div className="flex space-x-4 items-center">
+        <button
+          onClick={zoomIn}
+          className="px-4 py-2 border rounded-sm border-purple-600"
+        >
+          +
+        </button>
+        <div> {pxPerSeconds}</div>
+        <button
+          onClick={zoomOut}
+          className="px-4 py-2 border rounded-sm border-purple-600"
+        >
+          -
+        </button>
       </div>
     </div>
   )

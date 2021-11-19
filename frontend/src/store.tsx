@@ -1,13 +1,18 @@
 import create from "zustand"
 
 type BearState = {
-  bears: number
-  increasePopulation: () => void
-  removeAllBears: () => void
+  pxPerSeconds: number
+  horizontalZoomIn: () => void
+  horizontalZoomOut: () => void
 }
 
+const SCALE_IN = Math.exp(0.2)
+const SCALE_OUT = Math.exp(-0.2)
+
 export const useStore = create<BearState>((set) => ({
-  bears: 0,
-  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-  removeAllBears: () => set({ bears: 0 }),
+  pxPerSeconds: 5,
+  horizontalZoomIn: () =>
+    set((state) => ({ pxPerSeconds: state.pxPerSeconds * SCALE_IN })),
+  horizontalZoomOut: () =>
+    set((state) => ({ pxPerSeconds: state.pxPerSeconds * SCALE_OUT })),
 }))

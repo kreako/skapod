@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react"
 import colors from "tailwindcss/colors"
+import { useStore } from "../store"
 
 type DefaultSoundWaveProps = {
   className: string
@@ -52,15 +53,22 @@ const resizeWithPixelRatio = (canvas, ctx) => {
   // Reset canvas style width/height
   canvas.style.width = `${width}px`
   canvas.style.height = `${height}px`
+  console.log("draw", { width: canvas.style.width })
 }
 
 type ReadySoundWaveCanvasProps = {
+  duration: number
   datas: SoundWaveCanvasDatasProps[]
   className: string
 }
 
-function ReadySoundWaveCanvas({ datas, className }: ReadySoundWaveCanvasProps) {
+function ReadySoundWaveCanvas({
+  duration,
+  datas,
+  className,
+}: ReadySoundWaveCanvasProps) {
   let canvasRef = useRef<HTMLCanvasElement>()
+  const pxPerSeconds = useStore((state) => state.pxPerSeconds)
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -109,12 +117,16 @@ function ReadySoundWaveCanvas({ datas, className }: ReadySoundWaveCanvasProps) {
       ctx.lineTo(idx * x_step, canvas.height / 2)
     }
     ctx.fill()
-  }, [canvasRef, datas])
+  }, [canvasRef, datas, pxPerSeconds])
 
+  const style = {
+    width: pxPerSeconds * duration,
+  }
+  console.log("render", { style })
   // Here I could have made a fallback image inside but this is not really
   // necessary, if this browser doesn't support canvas, it won't be able
   // to execute this app anyway
-  return <canvas ref={canvasRef} className={className} />
+  return <canvas ref={canvasRef} className={className} style={style} />
 }
 
 type SoundWaveProgressCanvasProps = {
@@ -199,7 +211,11 @@ export default function SoundWaveCanvas({
       <div className="w-full h-48 border border-sky-700 relative">
         <div className="absolute inset-0 h-48">
           {ready ? (
-            <ReadySoundWaveCanvas datas={datas} className="w-full h-48" />
+            <ReadySoundWaveCanvas
+              duration={total}
+              datas={datas}
+              className="w-full h-48"
+            />
           ) : (
             <DefaultSoundWave className="w-full h-48" />
           )}
@@ -208,7 +224,7 @@ export default function SoundWaveCanvas({
           <SoundWaveProgressCanvas
             progress={progress}
             total={total}
-            className="w-full h-48"
+            className="h-48"
           />
         </div>
       </div>
