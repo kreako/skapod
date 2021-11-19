@@ -20,6 +20,7 @@
     "react-query": "^3.32.3",
     "react-router-dom": "^6.0.2",
     "tailwindcss": "^2.2.19",
+    "usehooks-ts": "^2.0.2",
     "zustand": "^3.6.5"
   },
   "devDependencies": {
