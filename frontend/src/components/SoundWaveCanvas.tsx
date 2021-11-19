@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react"
 import colors from "tailwindcss/colors"
 import { useStore } from "../store"
+import { resizeWithPixelRatio } from "../utils/canvas"
 
 type DefaultSoundWaveProps = {
   className: string
@@ -20,40 +21,6 @@ function DefaultSoundWave({ className }: DefaultSoundWaveProps) {
       />
     </svg>
   )
-}
-
-// Copy paste from somewhere on internet
-const getPixelRatio = (context) => {
-  var backingStore =
-    context.backingStorePixelRatio ||
-    context.webkitBackingStorePixelRatio ||
-    context.mozBackingStorePixelRatio ||
-    context.msBackingStorePixelRatio ||
-    context.oBackingStorePixelRatio ||
-    context.backingStorePixelRatio ||
-    1
-
-  return (window.devicePixelRatio || 1) / backingStore
-}
-
-const resizeWithPixelRatio = (canvas, ctx) => {
-  // init width/height of the canvas taking pixel ratio
-  // First get the ratio
-  const ratio = getPixelRatio(ctx)
-  // Current width/height from canvas computed style (slice because gives "1234px")
-  const width = Number(
-    getComputedStyle(canvas).getPropertyValue("width").slice(0, -2)
-  )
-  const height = Number(
-    getComputedStyle(canvas).getPropertyValue("height").slice(0, -2)
-  )
-  // Set canvas width/height
-  canvas.width = width * ratio
-  canvas.height = height * ratio
-  // Reset canvas style width/height
-  canvas.style.width = `${width}px`
-  canvas.style.height = `${height}px`
-  console.log("draw", { width: canvas.style.width })
 }
 
 type ReadySoundWaveCanvasProps = {
