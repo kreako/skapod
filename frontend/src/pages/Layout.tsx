@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react"
 import colors from "tailwindcss/colors"
-import { useWindowSize } from "usehooks-ts"
+import { useWindowSize, useEventListener } from "usehooks-ts"
 import { useStore } from "../store"
 import { resizeWithPixelRatio } from "../utils/canvas"
+import { keyboard } from "../utils/keyboard"
+import { useWheelEventListener } from "../utils/mouse"
 import { formatTime } from "../utils/time"
 
 function TimeScale() {
@@ -73,6 +75,21 @@ function Waves() {
 }
 
 export default function Layout() {
+  const { horizontalZoomIn, horizontalZoomOut } = useStore((state) => ({
+    horizontalZoomIn: state.horizontalZoomIn,
+    horizontalZoomOut: state.horizontalZoomOut,
+  }))
+
+  useWheelEventListener((event: WheelEvent) => {
+    event.preventDefault()
+    if (keyboard.ctrl) {
+      if (event.deltaY > 0) {
+        horizontalZoomOut()
+      } else {
+        horizontalZoomIn()
+      }
+    }
+  })
   return (
     <div className="flex h-screen">
       <div className="flex-grow flex flex-col">
