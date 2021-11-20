@@ -81,7 +81,7 @@ export default function Layout() {
   }))
 
   useWheelEventListener((event: WheelEvent) => {
-    event.preventDefault()
+    event.preventDefault() // works because event is registered as passive = false
     if (keyboard.ctrl) {
       if (event.deltaY > 0) {
         horizontalZoomOut()
