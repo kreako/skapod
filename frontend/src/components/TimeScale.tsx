@@ -45,17 +45,14 @@ export const secondsPerMarker = (pxPerSeconds: number): number => {
   }
 }
 
-export default function TimeScale() {
-  const pxPerSeconds = useStore((state) => state.pxPerSeconds)
-  // Approximation for element size but usable on 1st render
-  const windowSize = useWindowSize()
-
-  // Stupid default
-  const secPerMarker = secondsPerMarker(pxPerSeconds)
-
-  let displaySubSecond = secPerMarker < 1
+export const produceMarkers = (
+  secPerMarker: number,
+  pxPerSeconds: number,
+  elementWidth: number
+): TimeScaleViewPropsMarker[] => {
+  const displaySubSecond = secPerMarker < 1
   const markerWidth = secPerMarker * pxPerSeconds
-  const markerNb = Math.floor(windowSize.width / markerWidth)
+  const markerNb = Math.floor(elementWidth / markerWidth)
   const markers = []
   for (let idx = 0; idx < markerNb; idx++) {
     markers.push({
@@ -63,7 +60,19 @@ export default function TimeScale() {
       time: formatTime(idx * secPerMarker, { displaySubSecond }),
     })
   }
+  return markers
+}
 
+type TimeScaleViewPropsMarker = {
+  x: number
+  time: string
+}
+
+type TimeScaleViewProps = {
+  markers: TimeScaleViewPropsMarker[]
+}
+
+export function TimeScaleView({ markers }: TimeScaleViewProps) {
   return (
     <div className="bg-transparent absolute inset-0 z-10  overflow-hidden">
       {/* Labels */}
@@ -92,4 +101,15 @@ export default function TimeScale() {
       </div>
     </div>
   )
+}
+
+export default function TimeScale() {
+  const pxPerSeconds = useStore((state) => state.pxPerSeconds)
+  // Approximation for element size but usable on 1st render
+  const windowSize = useWindowSize()
+
+  const secPerMarker = secondsPerMarker(pxPerSeconds)
+  const markers = produceMarkers(secPerMarker, pxPerSeconds, windowSize.width)
+
+  return <TimeScaleView markers={markers} />
 }
