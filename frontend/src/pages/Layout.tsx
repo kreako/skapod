@@ -5,6 +5,7 @@ import { resizeWithPixelRatio } from "../utils/canvas"
 import { keyboard } from "../utils/keyboard"
 import { useWheelEventListener } from "../utils/mouse"
 import TimeScale from "../components/TimeScale"
+import { formatTime } from "../utils/time"
 
 function Waves() {
   let canvasRef = useRef<HTMLCanvasElement>()
@@ -33,21 +34,37 @@ function Waves() {
 }
 
 export default function Layout() {
-  const { horizontalZoomIn, horizontalZoomOut, pxPerSeconds } = useStore(
-    (state) => ({
-      horizontalZoomIn: state.horizontalZoomIn,
-      horizontalZoomOut: state.horizontalZoomOut,
-      pxPerSeconds: state.pxPerSeconds,
-    })
-  )
+  const {
+    pxPerSeconds,
+    horizontalZoomIn,
+    horizontalZoomOut,
+    start,
+    horizontalScrollRight,
+    horizontalScrollLeft,
+  } = useStore((state) => ({
+    pxPerSeconds: state.pxPerSeconds,
+    horizontalZoomIn: state.horizontalZoomIn,
+    horizontalZoomOut: state.horizontalZoomOut,
+    start: state.start,
+    horizontalScrollRight: state.horizontalScrollRight,
+    horizontalScrollLeft: state.horizontalScrollLeft,
+  }))
 
   useWheelEventListener((event: WheelEvent) => {
     event.preventDefault() // works because event is registered as passive = false
     if (keyboard.ctrl) {
+      // zoom
       if (event.deltaY > 0) {
         horizontalZoomOut()
       } else {
         horizontalZoomIn()
+      }
+    } else {
+      // scroll
+      if (event.deltaY > 0) {
+        horizontalScrollRight()
+      } else {
+        horizontalScrollLeft()
       }
     }
   })
@@ -57,7 +74,7 @@ export default function Layout() {
         <div className="bg-blue-200 h-16">
           Toolbar : {pxPerSeconds}
           <div>
-            <span>09:59:59</span>
+            <span>{formatTime(start, { displaySubSecond: true })}</span>
           </div>
         </div>
         <div className="flex w-screen flex-grow">
