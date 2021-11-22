@@ -2,33 +2,28 @@ import { useWindowSize } from "usehooks-ts"
 import { useStore } from "../store"
 import { formatTime } from "../utils/time"
 
-export default function TimeScale() {
-  const pxPerSeconds = useStore((state) => state.pxPerSeconds)
-  // Approximation for element size but usable on 1st render
-  const windowSize = useWindowSize()
+// the biggest label I will have is something like 09:59:59
+// it is around 64px wide so the spacing between 2 markers should not
+// be less than 64 + 20 = 84px
+export const MARKER_MINIMUM_SPACING = 84
 
-  // Stupid default
-  let secondsPerMarker = 1
-  // the biggest label I will have is something like 09:59:59
-  // it is around 64px wide so the spacing between 2 markers should not
-  // be less than 64 + 20 = 84px
-  const markerMinimumSpacing = 84
-  if (pxPerSeconds > markerMinimumSpacing) {
+export const secondsPerMarker = (pxPerSeconds: number): number => {
+  if (pxPerSeconds > MARKER_MINIMUM_SPACING) {
     // subSeconds
     const subSecondsScale = [1, 0.5, 0.2, 0.1]
     let idx = 0
-    while (subSecondsScale[idx] * pxPerSeconds > markerMinimumSpacing) {
+    while (subSecondsScale[idx] * pxPerSeconds > MARKER_MINIMUM_SPACING) {
       idx += 1
     }
-    secondsPerMarker = subSecondsScale[idx - 1]
-  } else if (60 * pxPerSeconds > markerMinimumSpacing) {
+    return subSecondsScale[idx - 1]
+  } else if (60 * pxPerSeconds > MARKER_MINIMUM_SPACING) {
     // seconds to minutes
     const secondsScale = [60, 30, 20, 10, 5, 2, 1]
     let idx = 0
-    while (secondsScale[idx] * pxPerSeconds > markerMinimumSpacing) {
+    while (secondsScale[idx] * pxPerSeconds > MARKER_MINIMUM_SPACING) {
       idx += 1
     }
-    secondsPerMarker = secondsScale[idx - 1]
+    return secondsScale[idx - 1]
   } else {
     // minutes to hours
     const minutesScale = [
@@ -43,19 +38,29 @@ export default function TimeScale() {
       1 * 60,
     ]
     let idx = 0
-    while (minutesScale[idx] * pxPerSeconds > markerMinimumSpacing) {
+    while (minutesScale[idx] * pxPerSeconds > MARKER_MINIMUM_SPACING) {
       idx += 1
     }
-    secondsPerMarker = minutesScale[idx - 1]
+    return minutesScale[idx - 1]
   }
-  let displaySubSecond = secondsPerMarker < 1
-  const markerWidth = secondsPerMarker * pxPerSeconds
+}
+
+export default function TimeScale() {
+  const pxPerSeconds = useStore((state) => state.pxPerSeconds)
+  // Approximation for element size but usable on 1st render
+  const windowSize = useWindowSize()
+
+  // Stupid default
+  const secPerMarker = secondsPerMarker(pxPerSeconds)
+
+  let displaySubSecond = secPerMarker < 1
+  const markerWidth = secPerMarker * pxPerSeconds
   const markerNb = Math.floor(windowSize.width / markerWidth)
   const markers = []
   for (let idx = 0; idx < markerNb; idx++) {
     markers.push({
       x: idx * markerWidth,
-      time: formatTime(idx * secondsPerMarker, { displaySubSecond }),
+      time: formatTime(idx * secPerMarker, { displaySubSecond }),
     })
   }
 
