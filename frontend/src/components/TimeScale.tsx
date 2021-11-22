@@ -45,20 +45,32 @@ export const secondsPerMarker = (pxPerSeconds: number): number => {
   }
 }
 
+const EPSILON = 0.00001
+
 export const produceMarkers = (
+  start: number,
   secPerMarker: number,
   pxPerSeconds: number,
   elementWidth: number
 ): TimeScaleViewPropsMarker[] => {
   const displaySubSecond = secPerMarker < 1
   const markerWidth = secPerMarker * pxPerSeconds
-  const markerNb = Math.floor(elementWidth / markerWidth)
   const markers = []
-  for (let idx = 0; idx < markerNb; idx++) {
-    markers.push({
-      x: idx * markerWidth,
-      time: formatTime(idx * secPerMarker, { displaySubSecond }),
-    })
+  // Compute The first marker time
+  const idiv = Math.floor(start / secPerMarker)
+  let time = 0
+  if (Math.abs(idiv * secPerMarker - start) < EPSILON) {
+    // start is already aligned on marker rythmn
+    time = start
+  } else {
+    time = (idiv + 1) * secPerMarker
+  }
+  // first marker position
+  let x = time * pxPerSeconds - start * pxPerSeconds
+  while (x < elementWidth) {
+    markers.push({ x, time: formatTime(time, { displaySubSecond }) })
+    time += secPerMarker
+    x += markerWidth
   }
   return markers
 }
@@ -104,12 +116,20 @@ export function TimeScaleView({ markers }: TimeScaleViewProps) {
 }
 
 export default function TimeScale() {
-  const pxPerSeconds = useStore((state) => state.pxPerSeconds)
+  const { start, pxPerSeconds } = useStore((state) => ({
+    start: state.start,
+    pxPerSeconds: state.pxPerSeconds,
+  }))
   // Approximation for element size but usable on 1st render
   const windowSize = useWindowSize()
 
   const secPerMarker = secondsPerMarker(pxPerSeconds)
-  const markers = produceMarkers(secPerMarker, pxPerSeconds, windowSize.width)
+  const markers = produceMarkers(
+    start,
+    secPerMarker,
+    pxPerSeconds,
+    windowSize.width
+  )
 
   return <TimeScaleView markers={markers} />
 }

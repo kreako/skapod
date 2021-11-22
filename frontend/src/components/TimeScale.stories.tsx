@@ -18,12 +18,22 @@ const Template: ComponentStory<typeof TimeScaleView> = (args) => (
   <TimeScaleView {...args} />
 )
 
-export const Default = Template.bind({})
-Default.args = {
-  markers: produceMarkers(10, 10, 2000),
+export const StartsAtZero = Template.bind({})
+StartsAtZero.args = {
+  markers: produceMarkers(0, 10, 10, 2000),
+}
+
+export const StartsAtNonZero = Template.bind({})
+StartsAtNonZero.args = {
+  markers: produceMarkers(7, 10, 10, 2000),
 }
 
 export const WithHours = Template.bind({})
 WithHours.args = {
-  markers: produceMarkers(2 * 60 * 60 + 27 * 60 + 42, 0.01, 2000),
+  markers: produceMarkers(
+    1 * 60 * 60 + 12 * 60 + 17,
+    2 * 60 * 60 + 27 * 60 + 42,
+    0.01,
+    2000
+  ),
 }
