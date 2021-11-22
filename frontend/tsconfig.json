@@ -2,5 +2,6 @@
   "typeAcquisition": { "include": ["jest"] },
   "compilerOptions": {
     "jsx": "react-jsx",
+    "esModuleInterop": true,
   }
 }
