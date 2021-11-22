@@ -6,8 +6,8 @@ type BearState = {
   horizontalZoomOut: () => void
 }
 
-const SCALE_IN = Math.exp(0.2)
-const SCALE_OUT = Math.exp(-0.2)
+export const ZOOM_SCALE_IN = Math.exp(0.2)
+export const ZOOM_SCALE_OUT = Math.exp(-0.2)
 
 export const MAX_ZOOM_IN = 2000
 export const MIN_ZOOM_OUT = 0.01
@@ -18,7 +18,7 @@ export const useStore = create<BearState>((set) => ({
     set((state) => {
       if (state.pxPerSeconds < MAX_ZOOM_IN) {
         // limit zoom in at 2000 px per seconds seems reasonable 1 full seconds on a large screen
-        return { pxPerSeconds: state.pxPerSeconds * SCALE_IN }
+        return { pxPerSeconds: state.pxPerSeconds * ZOOM_SCALE_IN }
       }
     }),
   horizontalZoomOut: () =>
@@ -27,7 +27,7 @@ export const useStore = create<BearState>((set) => ({
         // limit zoom out at 0.01 px per seconds
         // a 2000px wide screen displays around 55 hours
         // seems scrolling is reasonable after 55 hours of content
-        return { pxPerSeconds: state.pxPerSeconds * SCALE_OUT }
+        return { pxPerSeconds: state.pxPerSeconds * ZOOM_SCALE_OUT }
       }
     }),
 }))
