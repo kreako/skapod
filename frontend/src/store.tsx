@@ -4,6 +4,9 @@ type BearState = {
   pxPerSeconds: number
   horizontalZoomIn: () => void
   horizontalZoomOut: () => void
+  start: number
+  horizontalScrollRight: () => void
+  horizontalScrollLeft: () => void
 }
 
 export const ZOOM_SCALE_IN = Math.exp(0.2)
@@ -29,5 +32,21 @@ export const useStore = create<BearState>((set) => ({
         // seems scrolling is reasonable after 55 hours of content
         return { pxPerSeconds: state.pxPerSeconds * ZOOM_SCALE_OUT }
       }
+    }),
+  start: 0,
+  horizontalScrollRight: () =>
+    set((state) => {
+      // scroll ~100px
+      return { start: state.start + 100 / state.pxPerSeconds }
+    }),
+  horizontalScrollLeft: () =>
+    set((state) => {
+      // scroll ~100px
+      let start = state.start - 100 / state.pxPerSeconds
+      if (start < 0) {
+        // Don't scroll before 0
+        start = 0
+      }
+      return { start: start }
     }),
 }))
