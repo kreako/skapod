@@ -6,6 +6,9 @@ import { keyboard } from "../utils/keyboard"
 import { useWheelEventListener } from "../utils/mouse"
 import TimeScale from "../components/TimeScale"
 import { formatTime } from "../utils/time"
+import { useQuery } from "react-query"
+import { StaticRouterProps } from "react-router-dom"
+import axios from "axios"
 
 function Waves() {
   let canvasRef = useRef<HTMLCanvasElement>()
@@ -68,11 +71,18 @@ export default function Layout() {
       }
     }
   })
+
+  const project = useQuery("project", async () => {
+    const res = await axios.get("/project")
+    return res.data
+  })
+
   return (
     <div className="flex h-screen">
       <div className="flex-grow flex flex-col">
         <div className="bg-blue-200 h-16">
           Toolbar : {pxPerSeconds}
+          {project.isSuccess && <span> {project.data.maxTime} </span>}
           <div>
             <span>{formatTime(start, { displaySubSecond: true })}</span>
           </div>
