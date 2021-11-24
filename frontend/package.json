@@ -57,5 +57,8 @@
   },
   "prettier": {
     "semi": false
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
