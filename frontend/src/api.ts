@@ -21,7 +21,7 @@ type TrackContentType = {
   start: number
 }
 
-type TrackType = {
+export type TrackType = {
   id: string
   title: string
   content: TrackContentType[]
