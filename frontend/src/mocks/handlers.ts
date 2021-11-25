@@ -42,7 +42,8 @@ export const handlers = [
           },
           {
             id: "0",
-            title: "Voice 2",
+            title:
+              "Voice 2 with a very long title because I like to write a lot",
             content: [
               { clip: "4", start: 42 + 2 * 60 + 3 - 5 + 29 - 1 + 29 - 1 + 5 },
             ],
