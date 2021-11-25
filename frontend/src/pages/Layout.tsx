@@ -7,8 +7,7 @@ import { useWheelEventListener } from "../utils/mouse"
 import TimeScale from "../components/TimeScale"
 import { formatTime } from "../utils/time"
 import { useQuery } from "react-query"
-import { StaticRouterProps } from "react-router-dom"
-import axios from "axios"
+import { fetchProject } from "../api"
 
 function Waves() {
   let canvasRef = useRef<HTMLCanvasElement>()
@@ -72,10 +71,7 @@ export default function Layout() {
     }
   })
 
-  const project = useQuery("project", async () => {
-    const res = await axios.get("/project")
-    return res.data
-  })
+  const project = useQuery("project", fetchProject)
 
   return (
     <div className="flex h-screen">
