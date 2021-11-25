@@ -24,6 +24,8 @@ type TrackContentType = {
 export type TrackType = {
   id: string
   title: string
+  volume: number
+  panLR: number
   content: TrackContentType[]
 }
 

@@ -35,11 +35,11 @@ export default function TrackHeader({ track }: TrackHeaderProps) {
         </div>
         <div className="flex space-x-1 items-center mt-6">
           <div className="text-xs">Vol:</div>
-          <div className="text-sm">65%</div>
+          <div className="text-sm">{track.volume}%</div>
         </div>
         <div className="flex space-x-1 items-center">
           <div className="text-xs">LR:</div>
-          <div className="text-sm">0%</div>
+          <div className="text-sm">{track.panLR}%</div>
         </div>
         <div className="flex-grow"></div>
         <div className="truncate text-sm">{track.title}</div>
