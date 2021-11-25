@@ -26,6 +26,7 @@ export type TrackType = {
   title: string
   volume: number
   panLR: number
+  display: "full" | "mini"
   content: TrackContentType[]
 }
 

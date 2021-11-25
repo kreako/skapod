@@ -24,6 +24,17 @@ Default.args = {
   track: {
     id: "0",
     title: "Voice 1",
+    volume: 98,
+    panLR: -10,
+    display: "full",
     content: [],
+  },
+}
+
+export const Mini = Template.bind({})
+Mini.args = {
+  track: {
+    ...Default.args.track,
+    display: "mini",
   },
 }

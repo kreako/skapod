@@ -27,6 +27,7 @@ export const handlers = [
             title: "Voice 1",
             volume: 70,
             panLR: 0,
+            display: "full",
             content: [
               { clip: "0", start: 0 },
               { clip: "0", start: 19 },
@@ -39,6 +40,7 @@ export const handlers = [
             title: "Music",
             volume: 30,
             panLR: 0,
+            display: "full",
             content: [
               { clip: "2", start: 42 + (2 * 60 + 3) - 5 },
               { clip: "3", start: 42 + 2 * 60 + 3 - 5 + 29 - 1 + 29 - 1 },
@@ -50,6 +52,7 @@ export const handlers = [
               "Voice 2 with a very long title because I like to write a lot",
             volume: 55,
             panLR: 0,
+            display: "full",
             content: [
               { clip: "4", start: 42 + 2 * 60 + 3 - 5 + 29 - 1 + 29 - 1 + 5 },
             ],
