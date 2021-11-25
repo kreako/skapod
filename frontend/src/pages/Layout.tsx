@@ -71,7 +71,7 @@ export default function Layout() {
     }
   })
 
-  const project = useQuery("project", fetchProject)
+  const project = useQuery("project", fetchProject, { staleTime: Infinity })
 
   return (
     <div className="flex h-screen">
