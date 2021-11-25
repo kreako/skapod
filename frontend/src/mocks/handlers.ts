@@ -1,7 +1,8 @@
-import { rest } from "msw"
+import { DefaultRequestBody, rest } from "msw"
+import { ProjectType } from "../api"
 
 export const handlers = [
-  rest.get("/project", (req, res, ctx) => {
+  rest.get<DefaultRequestBody, ProjectType>("/project", (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -9,9 +10,9 @@ export const handlers = [
         clipsNb: 5,
         maxTime: 32 * 60 + 27,
         sources: [
-          { id: "0", kind: "record", length: 3 * 60 + 12, datas: {} },
-          { id: "1", kind: "sample", length: 7 * 60 + 23, datas: {} },
-          { id: "2", kind: "record", length: 23 * 60 + 13, datas: {} },
+          { id: "0", kind: "record", length: 3 * 60 + 12, data: {} },
+          { id: "1", kind: "sample", length: 7 * 60 + 23, data: {} },
+          { id: "2", kind: "record", length: 23 * 60 + 13, data: {} },
         ],
         clips: [
           { id: "0", source: "0", start: 12, length: 29 },
@@ -24,7 +25,7 @@ export const handlers = [
           {
             id: "0",
             title: "Voice 1",
-            clips: [
+            content: [
               { clip: "0", start: 0 },
               { clip: "0", start: 19 },
               { clip: "1", start: 42 },
@@ -34,7 +35,7 @@ export const handlers = [
           {
             id: "1",
             title: "Music",
-            clips: [
+            content: [
               { clip: "2", start: 42 + (2 * 60 + 3) - 5 },
               { clip: "3", start: 42 + 2 * 60 + 3 - 5 + 29 - 1 + 29 - 1 },
             ],
@@ -42,7 +43,7 @@ export const handlers = [
           {
             id: "0",
             title: "Voice 2",
-            clips: [
+            content: [
               { clip: "4", start: 42 + 2 * 60 + 3 - 5 + 29 - 1 + 29 - 1 + 5 },
             ],
           },
