@@ -8,6 +8,7 @@ import TimeScale from "../components/TimeScale"
 import { formatTime } from "../utils/time"
 import { useQuery } from "react-query"
 import { fetchProject } from "../api"
+import Header from "../components/Header"
 
 function Waves() {
   let canvasRef = useRef<HTMLCanvasElement>()
@@ -76,7 +77,7 @@ export default function Layout() {
   return (
     <div className="flex h-screen">
       <div className="flex-grow flex flex-col">
-        <div className="bg-blue-200 h-16">
+        <div className="bg-sky-300 h-16">
           Toolbar : {pxPerSeconds}
           {project.isSuccess && <span> {project.data.maxTime} </span>}
           <div>
@@ -84,7 +85,7 @@ export default function Layout() {
           </div>
         </div>
         <div className="flex w-screen flex-grow">
-          <div className="bg-orange-200 w-16">Header</div>
+          <Header />
           <div className="flex-grow relative">
             <Waves />
             <TimeScale />
