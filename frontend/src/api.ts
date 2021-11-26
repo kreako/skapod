@@ -2,9 +2,11 @@ import axios from "axios"
 
 type DataType = {}
 
+export type SourceKindType = "record" | "sample"
+
 type SourceType = {
   id: string
-  kind: "record" | "sample"
+  kind: SourceKindType
   length: number
   data: DataType
 }
@@ -21,12 +23,14 @@ type TrackContentType = {
   start: number
 }
 
+export type TrackDisplayType = "full" | "mini"
+
 export type TrackType = {
   id: string
   title: string
   volume: number
   panLR: number
-  display: "full" | "mini"
+  display: TrackDisplayType
   content: TrackContentType[]
 }
 
@@ -42,4 +46,16 @@ export type ProjectType = {
 export const fetchProject = async (): Promise<ProjectType> => {
   const res = await axios.get("/project")
   return res.data
+}
+
+export type MutDisplayType = {
+  display: TrackDisplayType
+  trackId: string
+}
+
+export const setTrackDiplay = async ({
+  trackId,
+  display,
+}: MutDisplayType): Promise<void> => {
+  await axios.patch(`/project/track/${trackId}/display`, { display })
 }
