@@ -1,4 +1,4 @@
-import { TrackType } from "../api"
+import { TrackDisplayType, TrackType } from "../api"
 import {
   HEADER_WIDTH_CLASSNAME,
   TRACK_HEIGHT_FULL_CLASSNAME,
@@ -10,19 +10,33 @@ import {
   DotsVerticalIcon,
 } from "@heroicons/react/solid"
 
-type TrackHeaderProps = {
-  track: TrackType
+type TrackHeaderHandlersProps = {
+  clickDisplay: (display: TrackDisplayType) => void
+  clickMenu: () => void
+  clickMute: () => void
+  clickSolo: () => void
+  clickVolume: () => void
+  clickPanLR: () => void
+  clickTitle: () => void
 }
 
-function TrackHeaderFull({ track }: TrackHeaderProps) {
+type TrackHeaderProps = {
+  track: TrackType
+  handlers: TrackHeaderHandlersProps
+}
+
+function TrackHeaderFull({ track, handlers }: TrackHeaderProps) {
   return (
     <div
       className={`flex flex-col ${HEADER_WIDTH_CLASSNAME} ${TRACK_HEIGHT_FULL_CLASSNAME} py-1 px-1 text-blueGray-900`}
     >
       <div className="flex">
-        <div className="flex-grow-0">
+        <button
+          className="flex-grow-0"
+          onClick={() => handlers.clickDisplay("mini")}
+        >
           <ChevronUpIcon className="h-4 w-4 border border-blueGray-900 rounded-md" />
-        </div>
+        </button>
         <div className="flex-grow"></div>
         <div className="flex-grow-0">
           <DotsVerticalIcon className="h-4 w-4" />
@@ -50,15 +64,18 @@ function TrackHeaderFull({ track }: TrackHeaderProps) {
   )
 }
 
-function TrackHeaderMini({ track }: TrackHeaderProps) {
+function TrackHeaderMini({ track, handlers }: TrackHeaderProps) {
   return (
     <div
       className={`flex flex-col ${HEADER_WIDTH_CLASSNAME} ${TRACK_HEIGHT_MINI_CLASSNAME} py-1 px-1 text-blueGray-900`}
     >
       <div className="flex">
-        <div className="flex-grow-0">
+        <button
+          className="flex-grow-0"
+          onClick={() => handlers.clickDisplay("full")}
+        >
           <ChevronDownIcon className="h-4 w-4 border border-blueGray-900 rounded-md" />
-        </div>
+        </button>
         <div className="flex-grow"></div>
         <div className="flex-grow-0">
           <DotsVerticalIcon className="h-4 w-4" />
@@ -70,13 +87,13 @@ function TrackHeaderMini({ track }: TrackHeaderProps) {
   )
 }
 
-export default function TrackHeader({ track }: TrackHeaderProps) {
+export default function TrackHeader({ track, handlers }: TrackHeaderProps) {
   return (
     <>
       {track.display == "full" ? (
-        <TrackHeaderFull track={track} />
+        <TrackHeaderFull track={track} handlers={handlers} />
       ) : (
-        <TrackHeaderMini track={track} />
+        <TrackHeaderMini track={track} handlers={handlers} />
       )}
       <div className="my-2 h-1 bg-sky-400"></div>
     </>
