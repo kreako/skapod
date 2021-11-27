@@ -1,5 +1,10 @@
 import { DefaultRequestBody, rest } from "msw"
-import { ProjectType, SourceKindType, TrackDisplayType } from "../api"
+import {
+  ColorType,
+  ProjectType,
+  SourceKindType,
+  TrackDisplayType,
+} from "../api"
 
 const defaultProject = {
   tracksNb: 3,
@@ -26,11 +31,41 @@ const defaultProject = {
     },
   ],
   clips: [
-    { id: "0", source: "0", start: 12, length: 29 },
-    { id: "1", source: "0", start: 22, length: 2 * 60 + 3 },
-    { id: "2", source: "1", start: 2 * 60 + 23, length: 29 },
-    { id: "3", source: "1", start: 12, length: 5 },
-    { id: "4", source: "2", start: 2, length: 23 * 60 + 11 },
+    {
+      id: "0",
+      source: "0",
+      start: 12,
+      length: 29,
+      color: "blue" as ColorType,
+    },
+    {
+      id: "1",
+      source: "0",
+      start: 22,
+      length: 2 * 60 + 3,
+      color: "blue" as ColorType,
+    },
+    {
+      id: "2",
+      source: "1",
+      start: 2 * 60 + 23,
+      length: 29,
+      color: "blue" as ColorType,
+    },
+    {
+      id: "3",
+      source: "1",
+      start: 12,
+      length: 5,
+      color: "blue" as ColorType,
+    },
+    {
+      id: "4",
+      source: "2",
+      start: 2,
+      length: 23 * 60 + 11,
+      color: "blue" as ColorType,
+    },
   ],
   tracks: [
     {

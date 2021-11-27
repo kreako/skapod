@@ -11,11 +11,14 @@ type SourceType = {
   data: DataType
 }
 
-type ClipType = {
+export type ColorType = "blue" | "green" | "gray" | "yellow" | "orange"
+
+export type ClipType = {
   id: string
   source: string
   start: number
   length: number
+  color: ColorType
 }
 
 type TrackContentType = {

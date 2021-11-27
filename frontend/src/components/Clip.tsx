@@ -1,8 +1,9 @@
 import { DotsVerticalIcon } from "@heroicons/react/solid"
 import { useEffect, useRef } from "react"
 import colors from "tailwindcss/colors"
-import { TrackDisplayType } from "../api"
+import { ColorType, TrackDisplayType } from "../api"
 import { resizeWithPixelRatio } from "../utils/canvas"
+import { colorToBgClassName } from "../utils/colors"
 import {
   TRACK_HEIGHT_FULL_CLASSNAME,
   TRACK_HEIGHT_MINI_CLASSNAME,
@@ -40,10 +41,11 @@ export function ClipMini() {
   )
 }
 
-export function ClipFull({ length }: ClipProps) {
+export function ClipFull({ length, color }: ClipProps) {
+  const bg = colorToBgClassName(color)
   return (
     <div
-      className={`absolute top-0 left-0 ${TRACK_HEIGHT_FULL_CLASSNAME} border border-sky-800 rounded-md z-10`}
+      className={`${bg} absolute top-0 left-0 ${TRACK_HEIGHT_FULL_CLASSNAME} border border-sky-800 rounded-md z-10`}
       style={{ width: `${length}px` }}
     >
       <div className="absolute top-0 inset-x-0 flex flex-col">
@@ -63,6 +65,7 @@ export function ClipFull({ length }: ClipProps) {
 type ClipProps = {
   display: TrackDisplayType
   length: number
+  color: ColorType
 }
 
 export default function Clip(props: ClipProps) {

@@ -20,6 +20,7 @@ export const Default = Template.bind({})
 Default.args = {
   length: 300,
   display: "full",
+  color: "blue",
 }
 
 export const Mini = Template.bind({})
