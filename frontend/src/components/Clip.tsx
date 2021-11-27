@@ -3,14 +3,15 @@ import { useEffect, useRef } from "react"
 import colors from "tailwindcss/colors"
 import { ColorType, TrackDisplayType } from "../api"
 import { resizeWithPixelRatio } from "../utils/canvas"
-import { colorToBgClassName } from "../utils/colors"
+import { colorToBgClassName, colorToValue } from "../utils/colors"
 import {
   TRACK_HEIGHT_FULL_CLASSNAME,
   TRACK_HEIGHT_MINI_CLASSNAME,
 } from "../utils/ui"
 
-export function ClipCanvas() {
+export function ClipCanvas({ color }: ClipProps) {
   let canvasRef = useRef<HTMLCanvasElement>()
+  const c = colorToValue(color)
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -27,26 +28,37 @@ export function ClipCanvas() {
     // Now for the drawing
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    ctx.fillStyle = colors.sky[200]
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.fillStyle = c
+    ctx.fillRect(
+      0,
+      canvas.height / 2 - 0.1 * canvas.height,
+      canvas.width,
+      0.2 * canvas.height
+    )
+
+    console.log(canvas.width, canvas.height)
   }, [canvasRef])
+  return <canvas ref={canvasRef} className="w-full h-full" />
+}
+
+export function ClipMini(props: ClipProps) {
+  const bg = colorToBgClassName(props.color)
   return (
-    <canvas ref={canvasRef} className="absolute top-8 bottom-0 inset-x-0 z-0" />
+    <div
+      className={`${bg} absolute top-0 left-0 ${TRACK_HEIGHT_MINI_CLASSNAME} border border-sky-800 rounded-md z-10`}
+      style={{ width: `${props.length}px` }}
+    >
+      <ClipCanvas {...props} />
+    </div>
   )
 }
 
-export function ClipMini() {
-  return (
-    <div className={`absolute top-0 left-0 ${TRACK_HEIGHT_MINI_CLASSNAME}`} />
-  )
-}
-
-export function ClipFull({ length, color }: ClipProps) {
-  const bg = colorToBgClassName(color)
+export function ClipFull(props: ClipProps) {
+  const bg = colorToBgClassName(props.color)
   return (
     <div
       className={`${bg} absolute top-0 left-0 ${TRACK_HEIGHT_FULL_CLASSNAME} border border-sky-800 rounded-md z-10`}
-      style={{ width: `${length}px` }}
+      style={{ width: `${props.length}px` }}
     >
       <div className="absolute top-0 inset-x-0 flex flex-col">
         <div className="flex items-center px-1 mt-1 border-b border-sky-800">
@@ -57,7 +69,9 @@ export function ClipFull({ length, color }: ClipProps) {
           </div>
         </div>
       </div>
-      <ClipCanvas />
+      <div className="absolute inset-x-0 top-8 bottom-0 z-0">
+        <ClipCanvas {...props} />
+      </div>
     </div>
   )
 }
@@ -70,7 +84,7 @@ type ClipProps = {
 
 export default function Clip(props: ClipProps) {
   if (props.display === "mini") {
-    return <ClipMini />
+    return <ClipMini {...props} />
   } else {
     return <ClipFull {...props} />
   }
