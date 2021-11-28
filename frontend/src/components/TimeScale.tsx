@@ -68,7 +68,9 @@ export const produceMarkers = (
   // first marker position
   let x = time * pxPerSeconds - start * pxPerSeconds
   while (x < elementWidth) {
-    markers.push({ x, time: formatTime(time, { displaySubSecond }) })
+    const markerTime = formatTime(time, { displaySubSecond })
+    const key = `${x}-${markerTime}`
+    markers.push({ x, time: markerTime, key })
     time += secPerMarker
     x += markerWidth
   }
@@ -78,6 +80,7 @@ export const produceMarkers = (
 type TimeScaleViewPropsMarker = {
   x: number
   time: string
+  key: string
 }
 
 type TimeScaleViewProps = {
@@ -91,7 +94,7 @@ export function TimeScaleView({ markers }: TimeScaleViewProps) {
       <div>
         {markers.map((m) => (
           <div
-            key={m.time}
+            key={m.key}
             className="absolute top-0"
             style={{ left: `${m.x}px` }}
           >
@@ -105,7 +108,7 @@ export function TimeScaleView({ markers }: TimeScaleViewProps) {
       <div>
         {markers.map((m) => (
           <div
-            key={m.time}
+            key={m.key}
             className="w-px h-2 bg-sky-700 absolute top-6 bottom-0"
             style={{ left: `${m.x}px` }}
           ></div>
