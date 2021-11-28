@@ -20,7 +20,7 @@ export function ClipCanvas({ display, color, left, top, length }: ClipProps) {
     display === "full"
       ? remToPx(TRACK_HEIGHT_FULL_REM - CLIP_HEADER_HEIGHT_REM)
       : remToPx(TRACK_HEIGHT_MINI_REM)
-  const width = length
+  const width = length - 2 // do not overlap the right border
 
   useEffect(() => {
     if (!canvasRef.current) {
