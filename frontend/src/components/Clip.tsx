@@ -1,6 +1,5 @@
 import { DotsVerticalIcon } from "@heroicons/react/solid"
 import { useEffect, useRef } from "react"
-import colors from "tailwindcss/colors"
 import { ColorType, TrackDisplayType } from "../api"
 import { resizeWithPixelRatio } from "../utils/canvas"
 import { colorToBgClassName, colorToValue } from "../utils/colors"
@@ -52,12 +51,11 @@ export function ClipMini(props: ClipProps) {
   const bg = colorToBgClassName(props.color)
   const style = {
     width: `${props.length}px`,
-    top: `${props.top}px`,
     left: `${props.left}px`,
   }
   return (
     <div
-      className={`${bg} absolute ${TRACK_HEIGHT_MINI_CLASSNAME} border border-sky-800 rounded-md z-10`}
+      className={`${bg} absolute top-0 ${TRACK_HEIGHT_MINI_CLASSNAME} border border-sky-800 rounded-md z-10`}
       style={style}
     >
       <ClipCanvas {...props} />
@@ -69,27 +67,26 @@ export function ClipFull(props: ClipProps) {
   const bg = colorToBgClassName(props.color)
   const style = {
     width: `${props.length}px`,
-    top: `${props.top}px`,
     left: `${props.left}px`,
   }
   const displayHeaderContent = props.length >= 25 ? true : false
   return (
     <div
-      className={`${bg} absolute ${TRACK_HEIGHT_FULL_CLASSNAME} border border-sky-800 rounded-md z-10`}
+      className={`${bg} absolute top-0 ${TRACK_HEIGHT_FULL_CLASSNAME} border border-sky-800 rounded-md z-10`}
       style={style}
     >
       <div className="absolute top-0 inset-x-0 flex flex-col">
-        <div className="flex items-center px-1 h-6 border-b border-sky-800">
-          {displayHeaderContent && (
-            <>
-              <div className="line-clamp-1">{props.id}</div>
-              <div className="flex-grow"></div>
-              <div className="flex-grow-0">
-                <DotsVerticalIcon className="h-4 w-4" />
-              </div>
-            </>
-          )}
-        </div>
+        {displayHeaderContent ? (
+          <div className="flex items-center px-1 h-6 border-b border-sky-800">
+            <div className="line-clamp-1">{props.id}</div>
+            <div className="flex-grow"></div>
+            <div className="flex-grow-0">
+              <DotsVerticalIcon className="h-4 w-4" />
+            </div>
+          </div>
+        ) : (
+          <div className="h-6 border-b border-sky-800" />
+        )}
       </div>
       <div className="absolute inset-x-0 top-8 bottom-0 z-0">
         <ClipCanvas {...props} />
@@ -101,7 +98,6 @@ export function ClipFull(props: ClipProps) {
 type ClipProps = {
   id: string
   display: TrackDisplayType
-  top: number
   left: number
   length: number
   color: ColorType
