@@ -22,6 +22,7 @@ export type ClipType = {
 }
 
 type TrackContentType = {
+  id: string
   clip: string
   start: number
 }

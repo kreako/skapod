@@ -75,10 +75,10 @@ const defaultProject = {
       panLR: 0,
       display: "full" as TrackDisplayType,
       content: [
-        { clip: "0", start: 0 },
-        { clip: "0", start: 19 },
-        { clip: "1", start: 42 },
-        { clip: "0", start: 42 + 2 * 60 + 3 - 5 + 29 - 1 },
+        { id: "0-0-0", clip: "0", start: 0 },
+        { id: "0-0-19", clip: "0", start: 19 },
+        { id: "0-1-42", clip: "1", start: 42 },
+        { id: "0-0-188", clip: "0", start: 42 + 2 * 60 + 3 - 5 + 29 - 1 },
       ],
     },
     {
@@ -88,8 +88,12 @@ const defaultProject = {
       panLR: 0,
       display: "full" as TrackDisplayType,
       content: [
-        { clip: "2", start: 42 + (2 * 60 + 3) - 5 },
-        { clip: "3", start: 42 + 2 * 60 + 3 - 5 + 29 - 1 + 29 - 1 },
+        { id: "1-2-160", clip: "2", start: 42 + (2 * 60 + 3) - 5 },
+        {
+          id: "1-3-216",
+          clip: "3",
+          start: 42 + 2 * 60 + 3 - 5 + 29 - 1 + 29 - 1,
+        },
       ],
     },
     {
@@ -99,7 +103,11 @@ const defaultProject = {
       panLR: 0,
       display: "full" as TrackDisplayType,
       content: [
-        { clip: "4", start: 42 + 2 * 60 + 3 - 5 + 29 - 1 + 29 - 1 + 5 },
+        {
+          id: "2-4-221",
+          clip: "4",
+          start: 42 + 2 * 60 + 3 - 5 + 29 - 1 + 29 - 1 + 5,
+        },
       ],
     },
   ],
