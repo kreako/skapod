@@ -35,7 +35,7 @@ const defaultProject = {
       id: "0",
       source: "0",
       start: 12,
-      length: 29,
+      length: 19,
       color: "gray" as ColorType,
     },
     {
