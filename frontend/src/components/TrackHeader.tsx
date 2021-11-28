@@ -3,6 +3,7 @@ import {
   HEADER_WIDTH_CLASSNAME,
   TRACK_HEIGHT_FULL_CLASSNAME,
   TRACK_HEIGHT_MINI_CLASSNAME,
+  TRACK_SEPARATOR_HEIGHT_CLASSNAME,
 } from "../utils/ui"
 import {
   ChevronUpIcon,
@@ -95,7 +96,7 @@ export default function TrackHeader({ track, handlers }: TrackHeaderProps) {
       ) : (
         <TrackHeaderMini track={track} handlers={handlers} />
       )}
-      <div className="my-2 h-1 bg-sky-400"></div>
+      <div className={`${TRACK_SEPARATOR_HEIGHT_CLASSNAME} bg-sky-400`}></div>
     </>
   )
 }
