@@ -47,15 +47,6 @@ export function Track({
     .filter((c) => {
       const clipId = c.clip
       const clip = clips[clipId]
-      if (track.id === "0" && clip.id === "0") {
-        console.log(
-          start,
-          end,
-          c.start,
-          clip.length,
-          isClipInView(start, end, c.start, clip.length)
-        )
-      }
       return isClipInView(start, end, c.start, clip.length)
     })
     .map((c) => {
@@ -75,9 +66,6 @@ export function Track({
         color: clip.color,
       }
     })
-  if (track.id === "0") {
-    console.log(start, end, clipsInView)
-  }
   return (
     <div className={`${heightTrack}`}>
       {clipsInView.map((clip) => (

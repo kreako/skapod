@@ -44,8 +44,6 @@ export function ClipCanvas({ display, color, left, top, length }: ClipProps) {
       canvas.width,
       0.2 * canvas.height
     )
-
-    console.log(canvas.width, canvas.height)
   }, [canvasRef, color, left, top, length])
   return <canvas ref={canvasRef} className="w-full h-full" />
 }
