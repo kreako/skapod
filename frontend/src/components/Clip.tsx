@@ -1,5 +1,5 @@
-import { DotsVerticalIcon } from "@heroicons/react/solid"
 import { useEffect, useRef } from "react"
+import { FaEllipsisV } from "react-icons/fa"
 import { ColorType, TrackDisplayType } from "../api"
 import { resizeWithPixelRatio } from "../utils/canvas"
 import { colorToBgClassName, colorToValue } from "../utils/colors"
@@ -12,7 +12,7 @@ import {
   TRACK_HEIGHT_MINI_REM,
 } from "../utils/ui"
 
-export function ClipCanvas({ display, color, left, top, length }: ClipProps) {
+export function ClipCanvas({ display, color, left, length }: ClipProps) {
   let canvasRef = useRef<HTMLCanvasElement>()
   const c = colorToValue(color)
   const height =
@@ -43,7 +43,7 @@ export function ClipCanvas({ display, color, left, top, length }: ClipProps) {
       canvas.width,
       0.2 * canvas.height
     )
-  }, [canvasRef, color, left, top, length])
+  }, [canvasRef, color, left, length])
   return <canvas ref={canvasRef} className="w-full h-full" />
 }
 
@@ -81,7 +81,7 @@ export function ClipFull(props: ClipProps) {
             <div className="line-clamp-1">{props.id}</div>
             <div className="flex-grow"></div>
             <div className="flex-grow-0">
-              <DotsVerticalIcon className="h-4 w-4" />
+              <FaEllipsisV className="h-4 w-4" />
             </div>
           </div>
         ) : (

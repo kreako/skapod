@@ -5,11 +5,7 @@ import {
   TRACK_HEIGHT_MINI_CLASSNAME,
   TRACK_SEPARATOR_HEIGHT_CLASSNAME,
 } from "../utils/ui"
-import {
-  ChevronUpIcon,
-  ChevronDownIcon,
-  DotsVerticalIcon,
-} from "@heroicons/react/solid"
+import { FaCaretDown, FaCaretUp, FaEllipsisV } from "react-icons/fa"
 
 type TrackHeaderHandlersProps = {
   clickDisplay: (display: TrackDisplayType) => void
@@ -36,11 +32,11 @@ function TrackHeaderFull({ track, handlers }: TrackHeaderProps) {
           className="flex-grow-0"
           onClick={() => handlers.clickDisplay("mini")}
         >
-          <ChevronUpIcon className="h-4 w-4 border border-blueGray-900 rounded-md" />
+          <FaCaretDown className="h-4 w-4 border border-blueGray-900 rounded-md" />
         </button>
         <div className="flex-grow"></div>
         <div className="flex-grow-0">
-          <DotsVerticalIcon className="h-4 w-4" />
+          <FaEllipsisV className="h-4 w-4" />
         </div>
       </div>
       <div className="flex justify-between mt-3">
@@ -75,11 +71,11 @@ function TrackHeaderMini({ track, handlers }: TrackHeaderProps) {
           className="flex-grow-0"
           onClick={() => handlers.clickDisplay("full")}
         >
-          <ChevronDownIcon className="h-4 w-4 border border-blueGray-900 rounded-md" />
+          <FaCaretUp className="h-4 w-4 border border-blueGray-900 rounded-md" />
         </button>
         <div className="flex-grow"></div>
         <div className="flex-grow-0">
-          <DotsVerticalIcon className="h-4 w-4" />
+          <FaEllipsisV className="h-4 w-4" />
         </div>
       </div>
       <div className="flex-grow"></div>
