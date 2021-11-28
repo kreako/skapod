@@ -1,7 +1,4 @@
-import { useEffect, useRef } from "react"
-import colors from "tailwindcss/colors"
 import { useStore } from "../store"
-import { resizeWithPixelRatio } from "../utils/canvas"
 import { keyboard } from "../utils/keyboard"
 import { useWheelEventListener } from "../utils/mouse"
 import TimeScale from "../components/TimeScale"
@@ -9,32 +6,7 @@ import { formatTime } from "../utils/time"
 import { useQuery } from "react-query"
 import { fetchProject } from "../api"
 import Header from "../components/Header"
-
-function Waves() {
-  let canvasRef = useRef<HTMLCanvasElement>()
-
-  useEffect(() => {
-    if (!canvasRef.current) {
-      return
-    }
-
-    // canvas/context accessors
-    const canvas = canvasRef.current
-    const ctx = canvas.getContext("2d")
-
-    // Set width/height taking pixel ratio in account
-    resizeWithPixelRatio(canvas, ctx)
-
-    // Now for the drawing
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-    ctx.fillStyle = colors.sky[50]
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-  }, [canvasRef])
-  return (
-    <canvas ref={canvasRef} className="absolute inset-0 z-0 h-full w-full" />
-  )
-}
+import Clips from "../components/Clips"
 
 export default function Layout() {
   const {
@@ -87,8 +59,8 @@ export default function Layout() {
         <div className="flex w-screen flex-grow">
           <Header />
           <div className="flex-grow relative">
-            <Waves />
             <TimeScale />
+            {project.isSuccess && <Clips project={project.data} />}
           </div>
         </div>
       </div>
