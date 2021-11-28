@@ -58,7 +58,7 @@ export default function Layout() {
         </div>
         <div className="flex w-screen flex-grow">
           <Header />
-          <div className="flex-grow relative">
+          <div className="flex-grow relative overflow-hidden">
             <TimeScale />
             {project.isSuccess && <Clips project={project.data} />}
           </div>
