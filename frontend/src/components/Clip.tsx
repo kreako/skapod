@@ -74,18 +74,23 @@ export function ClipFull(props: ClipProps) {
     top: `${props.top}px`,
     left: `${props.left}px`,
   }
+  const displayHeaderContent = props.length >= 25 ? true : false
   return (
     <div
       className={`${bg} absolute ${TRACK_HEIGHT_FULL_CLASSNAME} border border-sky-800 rounded-md z-10`}
       style={style}
     >
       <div className="absolute top-0 inset-x-0 flex flex-col">
-        <div className="flex items-center px-1 mt-1 border-b border-sky-800">
-          <div>{props.id}</div>
-          <div className="flex-grow"></div>
-          <div className="flex-grow-0">
-            <DotsVerticalIcon className="h-4 w-4" />
-          </div>
+        <div className="flex items-center px-1 h-6 border-b border-sky-800">
+          {displayHeaderContent && (
+            <>
+              <div className="line-clamp-1">{props.id}</div>
+              <div className="flex-grow"></div>
+              <div className="flex-grow-0">
+                <DotsVerticalIcon className="h-4 w-4" />
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className="absolute inset-x-0 top-8 bottom-0 z-0">
