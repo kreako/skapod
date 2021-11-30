@@ -12,6 +12,8 @@ export const TRACK_SEPARATOR_HEIGHT_REM = 0.25 + 0.5 + 0.5
 
 export const CLIP_HEADER_HEIGHT_REM = 2
 
+export const TOOLBAR_HEIGHT_CLASSNAME = "h-16"
+
 export function remToPx(rem: number): number {
   return rem * parseFloat(getComputedStyle(document.documentElement).fontSize)
 }

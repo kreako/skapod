@@ -7,6 +7,7 @@ import { useQuery } from "react-query"
 import { fetchProject } from "../api"
 import Header from "../components/Header"
 import Clips from "../components/Clips"
+import Toolbar from "../components/Toolbar"
 
 export default function Layout() {
   const {
@@ -49,13 +50,7 @@ export default function Layout() {
   return (
     <div className="flex h-screen">
       <div className="flex-grow flex flex-col">
-        <div className="bg-sky-300 h-16">
-          Toolbar : {pxPerSeconds}
-          {project.isSuccess && <span> {project.data.maxTime} </span>}
-          <div>
-            <span>{formatTime(start, { displaySubSecond: true })}</span>
-          </div>
-        </div>
+        <Toolbar />
         <div className="flex w-screen flex-grow">
           <Header />
           <div className="flex-grow relative overflow-hidden">
