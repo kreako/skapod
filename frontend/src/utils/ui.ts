@@ -1,4 +1,5 @@
 export const HEADER_WIDTH_CLASSNAME = "w-20"
+export const HEADER_WIDTH_PX = remToPx(5)
 
 export const TRACK_HEIGHT_FULL_CLASSNAME = "h-48"
 export const TRACK_HEIGHT_FULL_REM = 12
