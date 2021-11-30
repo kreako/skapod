@@ -1,12 +1,14 @@
 import create from "zustand"
 
-type BearState = {
+type State = {
   pxPerSeconds: number
   horizontalZoomIn: () => void
   horizontalZoomOut: () => void
   start: number
   horizontalScrollRight: () => void
   horizontalScrollLeft: () => void
+  cursor: number
+  setCursor: (number) => void
 }
 
 export const ZOOM_SCALE_IN = Math.exp(0.2)
@@ -15,7 +17,7 @@ export const ZOOM_SCALE_OUT = Math.exp(-0.2)
 export const MAX_ZOOM_IN = 2000
 export const MIN_ZOOM_OUT = 0.01
 
-export const useStore = create<BearState>((set) => ({
+export const useStore = create<State>((set) => ({
   pxPerSeconds: 5,
   horizontalZoomIn: () =>
     set((state) => {
@@ -48,5 +50,10 @@ export const useStore = create<BearState>((set) => ({
         start = 0
       }
       return { start: start }
+    }),
+  cursor: 0,
+  setCursor: (c) =>
+    set((state) => {
+      return { cursor: c }
     }),
 }))
