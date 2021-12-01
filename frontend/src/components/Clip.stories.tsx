@@ -7,7 +7,7 @@ export default {
   component: Clip,
   decorators: [
     (Story) => (
-      <div className="w-full h-full">
+      <div className="relative w-screen h-screen bg-sky-100">
         <Story />
       </div>
     ),
@@ -18,37 +18,57 @@ const Template: ComponentStory<typeof Clip> = (args) => <Clip {...args} />
 
 export const Blue = Template.bind({})
 Blue.args = {
-  length: 554,
-  display: "full",
+  name: "a blue clip",
+  top: 100,
+  left: 200,
+  width: 600,
+  height: 192,
   color: "blue",
 }
 
 export const Green = Template.bind({})
 Green.args = {
   ...Blue.args,
+  name: "a green clip",
   color: "green",
 }
 
 export const Gray = Template.bind({})
 Gray.args = {
   ...Blue.args,
+  name: "a gray clip",
   color: "gray",
 }
 
 export const Yellow = Template.bind({})
 Yellow.args = {
   ...Blue.args,
+  name: "a yellow clip",
   color: "yellow",
 }
 
 export const Orange = Template.bind({})
 Orange.args = {
   ...Blue.args,
+  name: "a orange clip",
   color: "orange",
 }
 
-export const MiniBlue = Template.bind({})
-MiniBlue.args = {
+export const MiniHeightBlue = Template.bind({})
+MiniHeightBlue.args = {
   ...Blue.args,
-  display: "mini",
+  height: 59,
+}
+
+export const MiniWidthBlue = Template.bind({})
+MiniWidthBlue.args = {
+  ...Blue.args,
+  width: 24,
+}
+
+export const MiniHeightWidthBlue = Template.bind({})
+MiniHeightWidthBlue.args = {
+  ...Blue.args,
+  height: 59,
+  width: 24,
 }
