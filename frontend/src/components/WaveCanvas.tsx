@@ -4,28 +4,14 @@ import { resizeWithPixelRatio } from "../utils/canvas"
 import { colorToValue } from "../utils/colors"
 
 type WaveCanvasProps = {
-  top: number
-  left: number
   width: number
   height: number
   color: ColorType
 }
 
-export default function WaveCanvas({
-  top,
-  left,
-  width,
-  height,
-  color,
-}: WaveCanvasProps) {
+export default function WaveCanvas({ width, height, color }: WaveCanvasProps) {
   let canvasRef = useRef<HTMLCanvasElement>()
   const c = colorToValue(color, 500)
-  const style = {
-    top: `${top}px`,
-    left: `${left}px`,
-    width: `${width}px`,
-    height: `${height}px`,
-  }
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -49,6 +35,6 @@ export default function WaveCanvas({
       canvas.width,
       0.2 * canvas.height
     )
-  }, [canvasRef, color, left, length])
+  }, [canvasRef, color, width, height])
   return <canvas ref={canvasRef} className="w-full h-full" />
 }
