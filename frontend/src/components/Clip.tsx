@@ -1,38 +1,9 @@
-import { FaEllipsisV, FaVolumeMute } from "react-icons/fa"
 import { ColorType } from "../types"
 import { colorToBgClassName } from "../utils/colors"
+import { ClipGroupHeader } from "./ClipGroupHeader"
 import WaveCanvas from "./WaveCanvas"
 
-type ClipHeaderProps = {
-  name: string
-  width: number
-  muted: boolean
-}
-
-export function ClipHeader({ name, width, muted }: ClipHeaderProps) {
-  const displayHeaderContent = width >= 25
-  const displayMutedIcon = muted && width >= 50
-  if (displayHeaderContent) {
-    return (
-      <div className="flex items-center px-1 h-6 border-b border-sky-800">
-        {displayMutedIcon && (
-          <div className="flex-grow-0 mr-2">
-            <FaVolumeMute className="h-4 w-4" />
-          </div>
-        )}
-        <div className="line-clamp-1">{name}</div>
-        <div className="flex-grow"></div>
-        <div className="flex-grow-0">
-          <FaEllipsisV className="h-4 w-4" />
-        </div>
-      </div>
-    )
-  } else {
-    return <div className="h-6 border-b border-sky-800" />
-  }
-}
-
-type ClipProps = {
+export type ClipProps = {
   name: string
   top: number
   left: number
@@ -59,7 +30,11 @@ export default function Clip(props: ClipProps) {
       style={style}
     >
       {displayHeader && (
-        <ClipHeader name={props.name} width={props.width} muted={props.muted} />
+        <ClipGroupHeader
+          name={props.name}
+          width={props.width}
+          muted={props.muted}
+        />
       )}
       <div className="absolute inset-0 z-0">
         <WaveCanvas
