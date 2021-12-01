@@ -24,6 +24,26 @@ Blue.args = {
   width: 600,
   height: 192,
   color: "blue",
+  muted: false,
+}
+
+export const Muted = Template.bind({})
+Muted.args = {
+  ...Blue.args,
+  name: "a muted clip",
+  muted: true,
+}
+
+export const SmallHeightMuted = Template.bind({})
+SmallHeightMuted.args = {
+  ...Muted.args,
+  height: 59,
+}
+
+export const SmallWidthMuted = Template.bind({})
+SmallWidthMuted.args = {
+  ...Muted.args,
+  width: 49,
 }
 
 export const Green = Template.bind({})
