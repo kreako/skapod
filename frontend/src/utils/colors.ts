@@ -1,5 +1,5 @@
 import colors from "tailwindcss/colors"
-import { ColorType } from "../api"
+import { ColorType } from "../types"
 
 export const colorToBgClassName = (color: ColorType): string => {
   switch (color) {
@@ -16,17 +16,17 @@ export const colorToBgClassName = (color: ColorType): string => {
   }
 }
 
-export const colorToValue = (color: ColorType): string => {
+export const colorToValue = (color: ColorType, level: number): string => {
   switch (color) {
     case "blue":
-      return colors.blue[500]
+      return colors.blue[level]
     case "gray":
-      return colors.blueGray[500]
+      return colors.blueGray[level]
     case "green":
-      return colors.green[500]
+      return colors.green[level]
     case "yellow":
-      return colors.yellow[500]
+      return colors.yellow[level]
     case "orange":
-      return colors.orange[500]
+      return colors.orange[level]
   }
 }
