@@ -46,11 +46,12 @@ export type GroupType = {
   start: number
   content: GroupContentType[]
   color: ColorType
+  display: GroupDisplayType
 }
 
-export enum DisplayType {
-  Full = "full",
-  Mini = "mini",
+export enum GroupDisplayType {
+  Expanded = "expanded",
+  Collapsed = "collapsed",
 }
 
 export enum GroupContentKindType {
