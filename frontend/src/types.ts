@@ -37,6 +37,7 @@ export type ClipType = {
   start: number
   length: number
   color: ColorType
+  mute: boolean
 }
 
 // Group : group contains clips and (sub-)groups
@@ -47,6 +48,7 @@ export type GroupType = {
   content: GroupContentType[]
   color: ColorType
   display: GroupDisplayType
+  mute: boolean
 }
 
 export enum GroupDisplayType {
