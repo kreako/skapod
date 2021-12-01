@@ -64,10 +64,16 @@ export type ClipInGroupType = {
   id: string
   clip: string
   start: number
-  display: DisplayType
+}
+
+// Instance of a group in a group
+export type GroupInGroupType = {
+  id: string
+  group: string
+  start: number
 }
 
 export type GroupContentType = {
   kind: GroupContentKindType
-  data: GroupType | ClipInGroupType
+  data: GroupInGroupType | ClipInGroupType
 }
