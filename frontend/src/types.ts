@@ -41,9 +41,11 @@ export type ClipType = {
 
 // Group : group contains clips and (sub-)groups
 export type GroupType = {
+  id: string
+  name: string
   start: number
   content: GroupContentType[]
-  display: DisplayType
+  color: ColorType
 }
 
 export enum DisplayType {
