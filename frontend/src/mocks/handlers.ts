@@ -1,114 +1,152 @@
 import { DefaultRequestBody, rest } from "msw"
 import {
   ColorType,
+  GroupContentKindType,
   ProjectType,
   SourceKindType,
-  TrackDisplayType,
-} from "../api"
+} from "../types"
+
+const l = (minutes: number, seconds: number) => minutes * 60 + seconds
+
+const sources = [
+  {
+    id: "0",
+    name: "sample 0",
+    kind: SourceKindType.Sample,
+    length: l(3, 22),
+    url: "",
+    peaks: {},
+  },
+  {
+    id: "1",
+    name: "sample 1",
+    kind: SourceKindType.Sample,
+    length: l(1, 19),
+    url: "",
+    peaks: {},
+  },
+  {
+    id: "2",
+    name: "record 0",
+    kind: SourceKindType.Record,
+    length: l(2, 7),
+    url: "",
+    peaks: {},
+  },
+  {
+    id: "3",
+    name: "record 1",
+    kind: SourceKindType.Record,
+    length: l(1, 2),
+    url: "",
+    peaks: {},
+  },
+  {
+    id: "4",
+    name: "record 2",
+    kind: SourceKindType.Record,
+    length: l(0, 18),
+    url: "",
+    peaks: {},
+  },
+]
+
+const clips = [
+  {
+    id: "0",
+    name: "crash",
+    source: "0",
+    start: 11.2,
+    length: 0.09,
+  },
+  {
+    id: "1",
+    name: "kick",
+    source: "0",
+    start: 7.1,
+    length: 0.1,
+  },
+  {
+    id: "2",
+    name: "break 1",
+    source: "0",
+    start: 28.74,
+    length: 6.13,
+  },
+  {
+    id: "3",
+    name: "break 2",
+    source: "1",
+    start: 38.03,
+    length: 26.58,
+  },
+  {
+    id: "4",
+    name: "interview 1",
+    source: "2",
+    start: 0,
+    length: l(2, 7),
+  },
+  {
+    id: "5",
+    name: "interview 2",
+    source: "3",
+    start: 3,
+    length: 59,
+  },
+  {
+    id: "6",
+    name: "interview 3",
+    source: "4",
+    start: 1,
+    length: 5,
+  },
+  {
+    id: "7",
+    name: "interview 4",
+    source: "4",
+    start: 8,
+    length: 12,
+  },
+]
 
 const defaultProject = {
-  tracksNb: 3,
-  clipsNb: 5,
-  maxTime: 32 * 60 + 27,
-  sources: [
+  id: "0",
+  sources,
+  clips,
+  content: [
     {
-      id: "0",
-      kind: "record" as SourceKindType,
-      length: 3 * 60 + 12,
-      data: {},
+      kind: GroupContentKindType.Clip,
+      data: {
+        id: "0",
+        clip: "6",
+        start: 0,
+        row: 0,
+        muted: false,
+        color: ColorType.Blue,
+      },
     },
     {
-      id: "1",
-      kind: "sample" as SourceKindType,
-      length: 7 * 60 + 23,
-      data: {},
+      kind: GroupContentKindType.Clip,
+      data: {
+        id: "0",
+        clip: "5",
+        start: 4,
+        row: 1,
+        muted: false,
+        color: ColorType.Blue,
+      },
     },
     {
-      id: "2",
-      kind: "record" as SourceKindType,
-      length: 23 * 60 + 13,
-      data: {},
-    },
-  ],
-  clips: [
-    {
-      id: "0",
-      source: "0",
-      start: 12,
-      length: 19,
-      color: "gray" as ColorType,
-    },
-    {
-      id: "1",
-      source: "0",
-      start: 22,
-      length: 2 * 60 + 3,
-      color: "yellow" as ColorType,
-    },
-    {
-      id: "2",
-      source: "1",
-      start: 2 * 60 + 23,
-      length: 29,
-      color: "orange" as ColorType,
-    },
-    {
-      id: "3",
-      source: "1",
-      start: 12,
-      length: 5,
-      color: "green" as ColorType,
-    },
-    {
-      id: "4",
-      source: "2",
-      start: 2,
-      length: 23 * 60 + 11,
-      color: "blue" as ColorType,
-    },
-  ],
-  tracks: [
-    {
-      id: "0",
-      title: "Voice 1",
-      volume: 70,
-      panLR: 0,
-      display: "full" as TrackDisplayType,
-      content: [
-        { id: "0-0-0", clip: "0", start: 0 },
-        { id: "0-0-19", clip: "0", start: 19 },
-        { id: "0-1-42", clip: "1", start: 42 },
-        { id: "0-0-188", clip: "0", start: 42 + 2 * 60 + 3 - 5 + 29 - 1 },
-      ],
-    },
-    {
-      id: "1",
-      title: "Music",
-      volume: 30,
-      panLR: 0,
-      display: "full" as TrackDisplayType,
-      content: [
-        { id: "1-2-160", clip: "2", start: 42 + (2 * 60 + 3) - 5 },
-        {
-          id: "1-3-216",
-          clip: "3",
-          start: 42 + 2 * 60 + 3 - 5 + 29 - 1 + 29 - 1,
-        },
-      ],
-    },
-    {
-      id: "2",
-      title: "Voice 2 with a very long title because I like to write a lot",
-      volume: 55,
-      panLR: 0,
-      display: "full" as TrackDisplayType,
-      content: [
-        {
-          id: "2-4-221",
-          clip: "4",
-          start: 42 + 2 * 60 + 3 - 5 + 29 - 1 + 29 - 1 + 5,
-        },
-      ],
+      kind: GroupContentKindType.Clip,
+      data: {
+        id: "0",
+        clip: "5",
+        start: 59 + 4 - 2,
+        row: 0,
+        muted: false,
+        color: ColorType.Blue,
+      },
     },
   ],
 }
@@ -124,16 +162,12 @@ const setProject = (project: ProjectType): void => {
   sessionStorage.setItem("project", JSON.stringify(project))
 }
 
-type PatchDisplayType = {
-  display: TrackDisplayType
-}
-
 export const handlers = [
-  rest.get<DefaultRequestBody, ProjectType>("/project", (req, res, ctx) => {
+  rest.get<DefaultRequestBody, ProjectType>("/project/:id", (req, res, ctx) => {
     const project = getProject()
     return res(ctx.status(200), ctx.json(project))
   }),
-  rest.patch<PatchDisplayType>(
+  /*rest.patch<PatchDisplayType>(
     "/project/track/:trackId/display",
     (req, res, ctx) => {
       const project = getProject()
@@ -147,5 +181,5 @@ export const handlers = [
       setProject(project)
       return res(ctx.status(200), ctx.json({}))
     }
-  ),
+  ),*/
 ]
