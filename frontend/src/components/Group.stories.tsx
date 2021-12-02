@@ -1,11 +1,15 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react"
 import { GroupContentKindType, GroupDisplayType } from "../types"
-
+import { action } from "@storybook/addon-actions"
 import Group from "./Group"
 
 export default {
   title: "Group",
   component: Group,
+  argTypes: {
+    onMutedClick: { action: "main muted" },
+    onMenuClick: { action: "main menu" },
+  },
   decorators: [
     (Story) => (
       <div className="relative w-screen h-screen bg-sky-100">
@@ -28,8 +32,10 @@ Blue.args = {
   color: "blue",
   muted: false,
   display: GroupDisplayType.Expanded,
+
   children: [
     {
+      id: "0",
       kind: GroupContentKindType.Clip,
       props: {
         id: "0",
@@ -40,10 +46,13 @@ Blue.args = {
         height: 100,
         color: "blue",
         muted: true,
+        onMutedClick: action("clip 0 muted"),
+        onMenuClick: action("clip 0 menu"),
       },
     },
 
     {
+      id: "1",
       kind: GroupContentKindType.Group,
       props: {
         id: "1",
@@ -57,6 +66,7 @@ Blue.args = {
         display: GroupDisplayType.Expanded,
         children: [
           {
+            id: "0",
             kind: GroupContentKindType.Clip,
             props: {
               id: "1",
@@ -70,6 +80,7 @@ Blue.args = {
             },
           },
           {
+            id: "1",
             kind: GroupContentKindType.Clip,
             props: {
               id: "2",
@@ -83,6 +94,7 @@ Blue.args = {
             },
           },
           {
+            id: "2",
             kind: GroupContentKindType.Clip,
             props: {
               id: "3",
@@ -96,6 +108,7 @@ Blue.args = {
             },
           },
           {
+            id: "3",
             kind: GroupContentKindType.Clip,
             props: {
               id: "4",
@@ -112,6 +125,7 @@ Blue.args = {
       },
     },
     {
+      id: "2",
       kind: GroupContentKindType.Clip,
       props: {
         id: "5",
@@ -125,6 +139,7 @@ Blue.args = {
       },
     },
     {
+      id: "3",
       kind: GroupContentKindType.Group,
       props: {
         id: "2",

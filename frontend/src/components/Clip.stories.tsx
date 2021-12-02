@@ -5,6 +5,10 @@ import Clip from "./Clip"
 export default {
   title: "Clip",
   component: Clip,
+  argTypes: {
+    onMutedClick: { action: "muted" },
+    onMenuClick: { action: "menu" },
+  },
   decorators: [
     (Story) => (
       <div className="relative w-screen h-screen bg-sky-100">

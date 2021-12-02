@@ -7,6 +7,7 @@ import { ClipGroupHeader } from "./ClipGroupHeader"
 import WaveCanvas from "./WaveCanvas"
 
 type GroupChildProps = {
+  id: string
   kind: GroupContentKindType
   props: GroupProps | ClipProps
 }
@@ -32,6 +33,8 @@ type GroupProps = {
   muted: boolean
   display: GroupDisplayType
   children: GroupChildProps[]
+  onMutedClick: () => void
+  onMenuClick: () => void
 }
 
 export default function Group(props: GroupProps) {
@@ -58,7 +61,9 @@ export default function Group(props: GroupProps) {
       >
         {displayHeader && (
           <ClipGroupHeader
-            className={dragHandleClassName}
+            handleClassName={dragHandleClassName}
+            onMutedClick={props.onMutedClick}
+            onMenuClick={props.onMenuClick}
             name={props.name}
             width={props.width}
             muted={props.muted}
@@ -72,7 +77,9 @@ export default function Group(props: GroupProps) {
               color={props.color}
             />
           ) : (
-            props.children.map((child) => <GroupChild {...child} />)
+            props.children.map((child) => (
+              <GroupChild key={child.id} {...child} />
+            ))
           )}
         </div>
       </div>

@@ -13,6 +13,8 @@ export type ClipProps = {
   height: number
   color: ColorType
   muted: boolean
+  onMutedClick: () => void
+  onMenuClick: () => void
 }
 
 export default function Clip(props: ClipProps) {
@@ -39,7 +41,9 @@ export default function Clip(props: ClipProps) {
       >
         {displayHeader && (
           <ClipGroupHeader
-            className={dragHandleClassName}
+            handleClassName={dragHandleClassName}
+            onMutedClick={props.onMutedClick}
+            onMenuClick={props.onMenuClick}
             name={props.name}
             width={props.width}
             muted={props.muted}
