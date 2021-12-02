@@ -3,7 +3,7 @@ import { keyboard } from "../utils/keyboard"
 import { useWheelEventListener } from "../utils/mouse"
 import TimeScale from "../components/TimeScale"
 import { useQuery } from "react-query"
-import { fetchProject } from "../api"
+import { fetchProject, projectKeys } from "../api"
 import Header from "../components/Header"
 import Clips from "../components/Clips"
 import Toolbar from "../components/Toolbar"
@@ -48,7 +48,9 @@ export default function Layout() {
     }
   })
 
-  const project = useQuery("project", fetchProject, { staleTime: Infinity })
+  const project = useQuery(projectKeys.single(0), fetchProject, {
+    staleTime: Infinity,
+  })
 
   const moveCursor = (event) => {
     const cursor = start + (event.clientX - HEADER_WIDTH_PX) / pxPerSeconds
