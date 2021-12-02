@@ -57,6 +57,7 @@ export enum GroupContentKindType {
 export type ClipInGroupType = {
   id: string
   clip: string
+  // start position in seconds relative to the parent group
   start: number
   // vertical position from 0 to ... : 0 is on top and n is lower
   row: number
@@ -68,6 +69,7 @@ export type ClipInGroupType = {
 export type GroupInGroupType = {
   id: string
   group: string
+  // start position in seconds relative to the parent group
   start: number
   // vertical position from 0 to ... : 0 is on top and n is lower
   row: number
