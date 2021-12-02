@@ -18,6 +18,7 @@ const Template: ComponentStory<typeof Clip> = (args) => <Clip {...args} />
 
 export const Blue = Template.bind({})
 Blue.args = {
+  id: "0",
   name: "a blue clip",
   top: 100,
   left: 200,

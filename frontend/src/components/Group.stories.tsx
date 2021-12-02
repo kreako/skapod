@@ -19,6 +19,7 @@ const Template: ComponentStory<typeof Group> = (args) => <Group {...args} />
 
 export const Blue = Template.bind({})
 Blue.args = {
+  id: "0",
   name: "a blue group",
   top: 10,
   left: 10,
@@ -31,6 +32,7 @@ Blue.args = {
     {
       kind: GroupContentKindType.Clip,
       props: {
+        id: "0",
         name: "a blue clip",
         top: 25 + 2,
         left: 0,
@@ -44,6 +46,7 @@ Blue.args = {
     {
       kind: GroupContentKindType.Group,
       props: {
+        id: "1",
         name: "a orange group",
         top: 125 + 2 * 2,
         left: 110,
@@ -56,6 +59,7 @@ Blue.args = {
           {
             kind: GroupContentKindType.Clip,
             props: {
+              id: "1",
               name: "1st clip",
               top: 25 + 2,
               left: 0,
@@ -68,6 +72,7 @@ Blue.args = {
           {
             kind: GroupContentKindType.Clip,
             props: {
+              id: "2",
               name: "2nd clip",
               top: 125 + 2 * 2,
               left: 97,
@@ -80,6 +85,7 @@ Blue.args = {
           {
             kind: GroupContentKindType.Clip,
             props: {
+              id: "3",
               name: "3rd clip",
               top: 225 + 3 * 2,
               left: 200,
@@ -92,6 +98,7 @@ Blue.args = {
           {
             kind: GroupContentKindType.Clip,
             props: {
+              id: "4",
               name: "4th clip",
               top: 125 + 2 * 2,
               left: 430,
@@ -107,6 +114,7 @@ Blue.args = {
     {
       kind: GroupContentKindType.Clip,
       props: {
+        id: "5",
         name: "a green clip",
         top: 450 + 7 * 2,
         left: 500,
@@ -119,6 +127,7 @@ Blue.args = {
     {
       kind: GroupContentKindType.Group,
       props: {
+        id: "2",
         name: "a gray group",
         top: 550 + 8 * 2,
         left: 170,
