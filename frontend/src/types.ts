@@ -22,22 +22,12 @@ export enum SourceKindType {
 }
 
 // Clip : a piece of a sound
-export enum ColorType {
-  Blue = "blue",
-  Green = "green",
-  Gray = "gray",
-  Yellow = "yellow",
-  Orange = "orange",
-}
-
 export type ClipType = {
   id: string
   name: string
   source: string
   start: number
   length: number
-  color: ColorType
-  muted: boolean
 }
 
 // Group : group contains clips and (sub-)groups
@@ -68,6 +58,8 @@ export type ClipInGroupType = {
   start: number
   // vertical position from 0 to ... : 0 is on top and n is lower
   row: number
+  muted: boolean
+  color: ColorType
 }
 
 // Instance of a group in a group
@@ -77,6 +69,16 @@ export type GroupInGroupType = {
   start: number
   // vertical position from 0 to ... : 0 is on top and n is lower
   row: number
+  muted: boolean
+  color: ColorType
+}
+
+export enum ColorType {
+  Blue = "blue",
+  Green = "green",
+  Gray = "gray",
+  Yellow = "yellow",
+  Orange = "orange",
 }
 
 export type GroupContentType = {
