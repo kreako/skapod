@@ -1,9 +1,21 @@
 export type ProjectType = {
   id: string
-  sources: SourceType[]
-  clips: ClipType[]
-  groups: GroupType[]
+  sources: SourceIndexType
+  clips: ClipIndexType
+  groups: GroupIndexType
   content: GroupContentType[]
+}
+
+export type SourceIndexType = {
+  [id: string]: SourceType
+}
+
+export type ClipIndexType = {
+  [id: string]: ClipType
+}
+
+export type GroupIndexType = {
+  [id: string]: GroupType
 }
 
 // Source : a sound
