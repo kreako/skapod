@@ -8,8 +8,8 @@ import {
 
 const l = (minutes: number, seconds: number) => minutes * 60 + seconds
 
-const sources = [
-  {
+const sources = {
+  "0": {
     id: "0",
     name: "sample 0",
     kind: SourceKindType.Sample,
@@ -17,7 +17,7 @@ const sources = [
     url: "",
     peaks: {},
   },
-  {
+  "1": {
     id: "1",
     name: "sample 1",
     kind: SourceKindType.Sample,
@@ -25,7 +25,7 @@ const sources = [
     url: "",
     peaks: {},
   },
-  {
+  "2": {
     id: "2",
     name: "record 0",
     kind: SourceKindType.Record,
@@ -33,7 +33,7 @@ const sources = [
     url: "",
     peaks: {},
   },
-  {
+  "3": {
     id: "3",
     name: "record 1",
     kind: SourceKindType.Record,
@@ -41,7 +41,7 @@ const sources = [
     url: "",
     peaks: {},
   },
-  {
+  "4": {
     id: "4",
     name: "record 2",
     kind: SourceKindType.Record,
@@ -49,71 +49,74 @@ const sources = [
     url: "",
     peaks: {},
   },
-]
+}
 
-const clips = [
-  {
+const clips = {
+  "0": {
     id: "0",
     name: "crash",
     source: "0",
     start: 11.2,
     length: 0.09,
   },
-  {
+  "1": {
     id: "1",
     name: "kick",
     source: "0",
     start: 7.1,
     length: 0.1,
   },
-  {
+  "2": {
     id: "2",
     name: "break 1",
     source: "0",
     start: 28.74,
     length: 6.13,
   },
-  {
+  "3": {
     id: "3",
     name: "break 2",
     source: "1",
     start: 38.03,
     length: 26.58,
   },
-  {
+  "4": {
     id: "4",
     name: "interview 1",
     source: "2",
     start: 0,
     length: l(2, 7),
   },
-  {
+  "5": {
     id: "5",
     name: "interview 2",
     source: "3",
     start: 3,
     length: 59,
   },
-  {
+  "6": {
     id: "6",
     name: "interview 3",
     source: "4",
     start: 1,
     length: 5,
   },
-  {
+  "7": {
     id: "7",
     name: "interview 4",
     source: "4",
     start: 8,
     length: 12,
   },
-]
+}
+
+const groups = {}
 
 const defaultProject = {
   id: "0",
   sources,
   clips,
+  groups,
   content: [
     {
       kind: GroupContentKindType.Clip,
