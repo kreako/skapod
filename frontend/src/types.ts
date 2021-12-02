@@ -2,6 +2,7 @@ export type ProjectType = {
   id: string
   sources: SourceType[]
   clips: ClipType[]
+  groups: GroupType[]
   content: GroupContentType[]
 }
 
