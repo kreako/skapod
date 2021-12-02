@@ -1,84 +1,33 @@
 import React from "react"
 import { useElementSize } from "usehooks-ts"
-import { ClipType, ProjectType, TrackType } from "../api"
+import { ClipType, GroupContentKindType, ProjectType } from "../types"
 import { useStore } from "../store"
 import { fromArrayToIdObjects } from "../utils/objects"
-import {
-  TRACK_HEIGHT_FULL_CLASSNAME,
-  TRACK_HEIGHT_FULL_REM,
-  TRACK_HEIGHT_MINI_CLASSNAME,
-  TRACK_HEIGHT_MINI_REM,
-  TRACK_SEPARATOR_HEIGHT_CLASSNAME,
-} from "../utils/ui"
-import { isClipInView, timeEndView } from "../utils/view"
+import { isObjectInView, timeEndView } from "../utils/view"
 import Clip from "./Clip"
+import Group from "./Group"
 
-type ClipsIndexType = {
-  [id: string]: ClipType
-}
-
-type TrackProps = {
-  track: TrackType
-  clips: ClipsIndexType
-  start: number
-  end: number
-  pxPerSeconds: number
-}
-
-export function Track({ track, clips, start, end, pxPerSeconds }: TrackProps) {
-  let heightTrack = TRACK_HEIGHT_FULL_CLASSNAME
-  let heightTrackRem = TRACK_HEIGHT_FULL_REM
-  if (track.display === "mini") {
-    heightTrack = TRACK_HEIGHT_MINI_CLASSNAME
-    heightTrackRem = TRACK_HEIGHT_MINI_REM
-  }
-  const clipsInView = track.content
-    .filter((c) => {
-      const clipId = c.clip
-      const clip = clips[clipId]
-      return isClipInView(start, end, c.start, clip.length)
-    })
-    .map((c) => {
-      const clipId = c.clip
-      const clipStartInTrack = c.start
-      const clip = clips[clipId]
-      return {
-        id: c.id,
-        clipStartInTrack: clipStartInTrack,
-        leftPx: (clipStartInTrack - start) * pxPerSeconds,
-        length: clip.length,
-        lengthPx: clip.length * pxPerSeconds,
-        color: clip.color,
-      }
-    })
-  return (
-    <div className={`${heightTrack} relative`}>
-      {clipsInView.map((clip) => (
-        <Clip
-          key={clip.id}
-          id={clip.id}
-          display={track.display}
-          left={clip.leftPx}
-          length={clip.lengthPx}
-          color={clip.color}
-        />
-      ))}
-    </div>
-  )
-}
-
-type ClipsProps = {
+type ContentProps = {
   project: ProjectType
 }
 
-export default function Clips({ project }: ClipsProps) {
+export default function Content({ project }: ContentProps) {
   const [rootRef, { width, height }] = useElementSize()
-  const { pxPerSeconds, start } = useStore((state) => ({
+  const { pxPerSeconds, start, clipHeight } = useStore((state) => ({
     pxPerSeconds: state.pxPerSeconds,
+    clipHeight: state.clipHeight,
     start: state.start,
   }))
   const end = timeEndView(start, pxPerSeconds, width)
-  const clipsIndex = fromArrayToIdObjects(project.clips)
+  const objectsInView = project.content.filter((c) => {
+    const objectLength =
+      c.kind === GroupContentKindType.Clip
+        ? project.clips[c.data.id].length
+        : project.groups[c.data.id]
+    const objectStart = c.data.start
+    const objectLength = object.length
+    return isObjectInView(start, end, c.data.start, c.data.id)
+  })
   return (
     <div ref={rootRef} className="absolute inset-0">
       {/* in sync with pt-12 in Header component */}

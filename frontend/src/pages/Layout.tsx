@@ -4,8 +4,7 @@ import { useWheelEventListener } from "../utils/mouse"
 import TimeScale from "../components/TimeScale"
 import { useQuery } from "react-query"
 import { fetchProject, projectKeys } from "../api"
-import Header from "../components/Header"
-import Clips from "../components/Clips"
+import Content from "../components/Content"
 import Toolbar from "../components/Toolbar"
 import Cursor from "../components/Cursor"
 import { HEADER_WIDTH_PX } from "../utils/ui"
@@ -66,7 +65,7 @@ export default function Layout() {
           onClick={moveCursor}
         >
           <TimeScale />
-          {project.isSuccess && <Clips project={project.data} />}
+          {project.isSuccess && <Content project={project.data} />}
           <Cursor />
         </div>
       </div>
