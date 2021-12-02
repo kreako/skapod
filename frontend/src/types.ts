@@ -66,6 +66,8 @@ export type ClipInGroupType = {
   id: string
   clip: string
   start: number
+  // vertical position from 0 to ... : 0 is on top and n is lower
+  row: number
 }
 
 // Instance of a group in a group
@@ -73,6 +75,8 @@ export type GroupInGroupType = {
   id: string
   group: string
   start: number
+  // vertical position from 0 to ... : 0 is on top and n is lower
+  row: number
 }
 
 export type GroupContentType = {
