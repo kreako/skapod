@@ -61,16 +61,13 @@ export default function Layout() {
     <div className="flex h-screen">
       <div className="flex-grow flex flex-col">
         <Toolbar />
-        <div className="flex w-screen flex-grow">
-          <Header />
-          <div
-            className="flex-grow relative overflow-hidden"
-            onClick={moveCursor}
-          >
-            <TimeScale />
-            {project.isSuccess && <Clips project={project.data} />}
-            <Cursor />
-          </div>
+        <div
+          className="flex w-screen flex-grow relative overflow-hidden"
+          onClick={moveCursor}
+        >
+          <TimeScale />
+          {project.isSuccess && <Clips project={project.data} />}
+          <Cursor />
         </div>
       </div>
     </div>
