@@ -26,7 +26,9 @@ export type ClipType = {
   id: string
   name: string
   source: string
+  // start position in seconds relative to source
   start: number
+  // length in seconds from start point
   length: number
 }
 
