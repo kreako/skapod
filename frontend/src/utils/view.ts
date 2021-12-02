@@ -1,5 +1,3 @@
-import { ClipType } from "../api"
-
 export function timeEndView(
   startSec: number,
   pxPerSeconds: number,
@@ -8,18 +6,18 @@ export function timeEndView(
   return startSec + viewWidth / pxPerSeconds
 }
 
-export function isClipInView(
+export function isObjectInView(
   viewStart: number,
   viewEnd: number,
-  clipStartInTrack: number,
-  clipLength: number
+  objectStart: number,
+  objectLength: number
 ): boolean {
-  const clipEndInTrack = clipStartInTrack + clipLength
+  const objectEnd = objectStart + objectLength
   return (
-    (viewStart < clipStartInTrack && clipStartInTrack < viewEnd) ||
-    (viewStart < clipEndInTrack && clipEndInTrack < viewEnd) ||
-    (clipStartInTrack < viewStart && viewEnd < clipEndInTrack) ||
-    viewStart === clipStartInTrack ||
-    viewEnd === clipEndInTrack
+    (viewStart < objectStart && objectStart < viewEnd) ||
+    (viewStart < objectEnd && objectEnd < viewEnd) ||
+    (objectStart < viewStart && viewEnd < objectEnd) ||
+    viewStart === objectStart ||
+    viewEnd === objectEnd
   )
 }
