@@ -6,7 +6,7 @@ export type ProjectType = {
 }
 
 // Source : a sound
-type SourceType = {
+export type SourceType = {
   id: string
   name: string
   kind: SourceKindType
