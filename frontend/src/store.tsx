@@ -4,6 +4,9 @@ type State = {
   pxPerSeconds: number
   horizontalZoomIn: () => void
   horizontalZoomOut: () => void
+  clipHeight: number
+  verticalZoomIn: () => void
+  verticalZoomOut: () => void
   start: number
   horizontalScrollRight: () => void
   horizontalScrollLeft: () => void
@@ -11,30 +14,48 @@ type State = {
   setCursor: (number) => void
 }
 
-export const ZOOM_SCALE_IN = Math.exp(0.2)
-export const ZOOM_SCALE_OUT = Math.exp(-0.2)
+export const HORIZONTAL_ZOOM_SCALE_IN = Math.exp(0.2)
+export const HORIZONTAL_ZOOM_SCALE_OUT = Math.exp(-0.2)
+export const MAX_HORIZONTAL_ZOOM_IN = 2000
+export const MIN_HORIZONTAL_ZOOM_OUT = 0.01
 
-export const MAX_ZOOM_IN = 2000
-export const MIN_ZOOM_OUT = 0.01
+export const MAX_VERTICAL_ZOOM_IN = 500
+export const MAX_VERTICAL_ZOOM_OUT = 25
 
 export const useStore = create<State>((set) => ({
+  // Horizontal scale
   pxPerSeconds: 5,
   horizontalZoomIn: () =>
     set((state) => {
-      if (state.pxPerSeconds < MAX_ZOOM_IN) {
+      if (state.pxPerSeconds < MAX_HORIZONTAL_ZOOM_IN) {
         // limit zoom in at 2000 px per seconds seems reasonable 1 full seconds on a large screen
-        return { pxPerSeconds: state.pxPerSeconds * ZOOM_SCALE_IN }
+        return { pxPerSeconds: state.pxPerSeconds * HORIZONTAL_ZOOM_SCALE_IN }
       }
     }),
   horizontalZoomOut: () =>
     set((state) => {
-      if (state.pxPerSeconds > MIN_ZOOM_OUT) {
+      if (state.pxPerSeconds > MIN_HORIZONTAL_ZOOM_OUT) {
         // limit zoom out at 0.01 px per seconds
         // a 2000px wide screen displays around 55 hours
         // seems scrolling is reasonable after 55 hours of content
-        return { pxPerSeconds: state.pxPerSeconds * ZOOM_SCALE_OUT }
+        return { pxPerSeconds: state.pxPerSeconds * HORIZONTAL_ZOOM_SCALE_OUT }
       }
     }),
+  // Vertical scale
+  clipHeight: 100,
+  verticalZoomIn: () =>
+    set((state) => {
+      if (state.clipHeight < MAX_VERTICAL_ZOOM_IN) {
+        return { clipHeight: state.clipHeight + 25 }
+      }
+    }),
+  verticalZoomOut: () =>
+    set((state) => {
+      if (state.clipHeight > MAX_VERTICAL_ZOOM_OUT) {
+        return { clipHeight: state.clipHeight - 25 }
+      }
+    }),
+  // View start
   start: 0,
   horizontalScrollRight: () =>
     set((state) => {
@@ -51,6 +72,7 @@ export const useStore = create<State>((set) => ({
       }
       return { start: start }
     }),
+  // Cursor position
   cursor: 0,
   setCursor: (c) =>
     set((state) => {
