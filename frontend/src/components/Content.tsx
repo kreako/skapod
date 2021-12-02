@@ -1,6 +1,6 @@
 import React from "react"
 import { useElementSize } from "usehooks-ts"
-import { ClipType, GroupContentKindType, ProjectType } from "../types"
+import { ClipType, GroupContentKindType, ProjectType } from "../api/types"
 import { useStore } from "../store"
 import { fromArrayToIdObjects } from "../utils/objects"
 import { isObjectInView, timeEndView } from "../utils/view"

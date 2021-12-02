@@ -4,7 +4,7 @@ import {
   GroupContentKindType,
   ProjectType,
   SourceKindType,
-} from "../types"
+} from "../api/types"
 
 const l = (minutes: number, seconds: number) => minutes * 60 + seconds
 

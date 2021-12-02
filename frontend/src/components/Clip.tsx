@@ -1,5 +1,5 @@
 import Draggable from "react-draggable"
-import { ColorType } from "../types"
+import { ColorType } from "../api/types"
 import { colorToBgClassName } from "../utils/colors"
 import { ClipGroupHeader } from "./ClipGroupHeader"
 import WaveCanvas from "./WaveCanvas"

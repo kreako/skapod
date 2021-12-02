@@ -1,5 +1,5 @@
 import colors from "tailwindcss/colors"
-import { ColorType } from "../types"
+import { ColorType } from "../api/types"
 
 export const colorToBgClassName = (color: ColorType): string => {
   switch (color) {

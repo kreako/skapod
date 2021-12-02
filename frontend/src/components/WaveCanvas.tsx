@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { ColorType } from "../types"
+import { ColorType } from "../api/types"
 import { resizeWithPixelRatio } from "../utils/canvas"
 import { colorToValue } from "../utils/colors"
 

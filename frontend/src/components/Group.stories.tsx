@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import { GroupContentKindType, GroupDisplayType } from "../types"
+import { GroupContentKindType, GroupDisplayType } from "../api/types"
 import { action } from "@storybook/addon-actions"
 import Group from "./Group"
 
