@@ -67,7 +67,7 @@ export enum GroupContentKindType {
 }
 
 // Instance of a clip in a group
-export type ClipInGroupType = {
+export type ClipInstanceType = {
   id: string
   clip: string
   // start position in seconds relative to the parent group
@@ -79,7 +79,7 @@ export type ClipInGroupType = {
 }
 
 // Instance of a group in a group
-export type GroupInGroupType = {
+export type GroupInstanceType = {
   id: string
   group: string
   // start position in seconds relative to the parent group
@@ -100,5 +100,5 @@ export enum ColorType {
 
 export type GroupContentType = {
   kind: GroupContentKindType
-  data: GroupInGroupType | ClipInGroupType
+  data: GroupInstanceType | ClipInstanceType
 }
