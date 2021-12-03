@@ -1,6 +1,6 @@
 import axios from "axios"
 import { QueryFunctionContext } from "react-query"
-import { ProjectType } from "./types"
+import { Project, ProjectType } from "./project"
 
 export const projectKeys = {
   all: [{ scope: "projects" }] as const,
@@ -13,7 +13,7 @@ export const fetchProject = async ({
   ReturnType<typeof projectKeys.single>
 >): Promise<ProjectType> => {
   const res = await axios.get(`/project/${id}`)
-  return res.data
+  return new Project(res.data)
 }
 
 /*export type MutDisplayType = {
