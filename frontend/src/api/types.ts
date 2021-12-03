@@ -1,25 +1,25 @@
-export type ProjectType = {
+export type RawProjectType = {
   id: string
-  sources: SourceIndexType
-  clips: ClipIndexType
-  groups: GroupIndexType
-  content: GroupContentType[]
+  sources: RawSourceIndexType
+  clips: RawClipIndexType
+  groups: RawGroupIndexType
+  content: RawGroupContentType[]
 }
 
-export type SourceIndexType = {
-  [id: string]: SourceType
+export type RawSourceIndexType = {
+  [id: string]: RawSourceType
 }
 
-export type ClipIndexType = {
-  [id: string]: ClipType
+export type RawClipIndexType = {
+  [id: string]: RawClipType
 }
 
-export type GroupIndexType = {
-  [id: string]: GroupType
+export type RawGroupIndexType = {
+  [id: string]: RawGroupType
 }
 
 // Source : a sound
-export type SourceType = {
+export type RawSourceType = {
   id: string
   name: string
   kind: SourceKindType
@@ -35,7 +35,7 @@ export enum SourceKindType {
 }
 
 // Clip : a piece of a sound
-export type ClipType = {
+export type RawClipType = {
   id: string
   name: string
   source: string
@@ -46,11 +46,11 @@ export type ClipType = {
 }
 
 // Group : group contains clips and (sub-)groups
-export type GroupType = {
+export type RawGroupType = {
   id: string
   name: string
   start: number
-  content: GroupContentType[]
+  content: RawGroupContentType[]
   color: ColorType
   display: GroupDisplayType
   muted: boolean
@@ -67,7 +67,7 @@ export enum GroupContentKindType {
 }
 
 // Instance of a clip in a group
-export type ClipInstanceType = {
+export type RawClipInstanceType = {
   id: string
   clip: string
   // start position in seconds relative to the parent group
@@ -79,7 +79,7 @@ export type ClipInstanceType = {
 }
 
 // Instance of a group in a group
-export type GroupInstanceType = {
+export type RawGroupInstanceType = {
   id: string
   group: string
   // start position in seconds relative to the parent group
@@ -98,7 +98,7 @@ export enum ColorType {
   Orange = "orange",
 }
 
-export type GroupContentType = {
+export type RawGroupContentType = {
   kind: GroupContentKindType
-  data: GroupInstanceType | ClipInstanceType
+  data: RawGroupInstanceType | RawClipInstanceType
 }

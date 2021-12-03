@@ -2,7 +2,7 @@ import { DefaultRequestBody, rest } from "msw"
 import {
   ColorType,
   GroupContentKindType,
-  ProjectType,
+  RawProjectType,
   SourceKindType,
 } from "../api/types"
 
@@ -154,22 +154,25 @@ const defaultProject = {
   ],
 }
 
-const getProject = (): ProjectType => {
+const getProject = (): RawProjectType => {
   if (!("project" in sessionStorage)) {
     setProject(defaultProject)
   }
   return JSON.parse(sessionStorage.getItem("project"))
 }
 
-const setProject = (project: ProjectType): void => {
+const setProject = (project: RawProjectType): void => {
   sessionStorage.setItem("project", JSON.stringify(project))
 }
 
 export const handlers = [
-  rest.get<DefaultRequestBody, ProjectType>("/project/:id", (req, res, ctx) => {
-    const project = getProject()
-    return res(ctx.status(200), ctx.json(project))
-  }),
+  rest.get<DefaultRequestBody, RawProjectType>(
+    "/project/:id",
+    (req, res, ctx) => {
+      const project = getProject()
+      return res(ctx.status(200), ctx.json(project))
+    }
+  ),
   /*rest.patch<PatchDisplayType>(
     "/project/track/:trackId/display",
     (req, res, ctx) => {
