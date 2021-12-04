@@ -50,7 +50,7 @@ export class Project implements ProjectType {
       this.groups[id] = new Group(this, raw.groups[id])
     }
 
-    this.content = raw.content.map((c) => new GroupContent(this, c))
+    this.content = raw.content.map((c) => new GroupContent(this, null, c))
   }
 
   length = (): number => contentLength(this.content)

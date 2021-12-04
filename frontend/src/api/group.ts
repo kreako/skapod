@@ -36,7 +36,7 @@ export class Group implements GroupType {
     this.id = raw.id
     this.name = raw.name
     this.start = raw.start
-    this.content = raw.content.map((c) => new GroupContent(project, c))
+    this.content = raw.content.map((c) => new GroupContent(project, this, c))
     this.color = raw.color
     this.display = raw.display
     this.muted = raw.muted
