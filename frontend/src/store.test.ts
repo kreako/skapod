@@ -23,7 +23,7 @@ test("clipHeight - zoom in/out", () => {
 test("viewEnd - produce end seconds", () => {
   const { result } = renderHook(() =>
     useStore((state) => ({
-      start: state.start,
+      viewStart: state.viewStart,
       horizontalScrollRight: state.horizontalScrollRight,
       horizontalScrollLeft: state.horizontalScrollLeft,
       viewEnd: state.viewEnd,
@@ -32,7 +32,7 @@ test("viewEnd - produce end seconds", () => {
       horizontalZoomOut: state.horizontalZoomOut,
     }))
   )
-  expect(result.current.start).toBe(0)
+  expect(result.current.viewStart).toBe(0)
   expect(result.current.pxPerSeconds).toBe(5)
   expect(result.current.viewEnd(800)).toBe(160)
 
@@ -40,6 +40,6 @@ test("viewEnd - produce end seconds", () => {
     result.current.horizontalScrollRight()
   })
 
-  expect(result.current.start).toBe(20)
+  expect(result.current.viewStart).toBe(20)
   expect(result.current.viewEnd(800)).toBe(180)
 })

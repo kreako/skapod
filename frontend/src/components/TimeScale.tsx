@@ -119,8 +119,8 @@ export function TimeScaleView({ markers }: TimeScaleViewProps) {
 }
 
 export default function TimeScale() {
-  const { start, pxPerSeconds } = useStore((state) => ({
-    start: state.start,
+  const { viewStart, pxPerSeconds } = useStore((state) => ({
+    viewStart: state.viewStart,
     pxPerSeconds: state.pxPerSeconds,
   }))
   // Approximation for element size but usable on 1st render
@@ -128,7 +128,7 @@ export default function TimeScale() {
 
   const secPerMarker = secondsPerMarker(pxPerSeconds)
   const markers = produceMarkers(
-    start,
+    viewStart,
     secPerMarker,
     pxPerSeconds,
     windowSize.width

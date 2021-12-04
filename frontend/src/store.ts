@@ -7,7 +7,7 @@ type State = {
   clipHeight: number
   verticalZoomIn: () => void
   verticalZoomOut: () => void
-  start: number
+  viewStart: number
   horizontalScrollRight: () => void
   horizontalScrollLeft: () => void
   viewEnd: (width: number) => number
@@ -57,24 +57,24 @@ export const useStore = create<State>((set, get) => ({
       }
     }),
   // View start
-  start: 0,
+  viewStart: 0,
   horizontalScrollRight: () =>
     set((state) => {
       // scroll ~100px
-      return { start: state.start + 100 / state.pxPerSeconds }
+      return { viewStart: state.viewStart + 100 / state.pxPerSeconds }
     }),
   horizontalScrollLeft: () =>
     set((state) => {
       // scroll ~100px
-      let start = state.start - 100 / state.pxPerSeconds
+      let start = state.viewStart - 100 / state.pxPerSeconds
       if (start < 0) {
         // Don't scroll before 0
         start = 0
       }
-      return { start: start }
+      return { viewStart: start }
     }),
   viewEnd: (viewWidth: number): number =>
-    get().start + viewWidth / get().pxPerSeconds,
+    get().viewStart + viewWidth / get().pxPerSeconds,
   // Cursor position
   cursor: 0,
   setCursor: (c) =>
