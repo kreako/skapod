@@ -14,7 +14,7 @@ export default function Layout() {
     pxPerSeconds,
     horizontalZoomIn,
     horizontalZoomOut,
-    start,
+    viewStart,
     horizontalScrollRight,
     horizontalScrollLeft,
     setCursor,
@@ -22,7 +22,7 @@ export default function Layout() {
     pxPerSeconds: state.pxPerSeconds,
     horizontalZoomIn: state.horizontalZoomIn,
     horizontalZoomOut: state.horizontalZoomOut,
-    start: state.start,
+    viewStart: state.viewStart,
     horizontalScrollRight: state.horizontalScrollRight,
     horizontalScrollLeft: state.horizontalScrollLeft,
     setCursor: state.setCursor,
@@ -52,7 +52,7 @@ export default function Layout() {
   })
 
   const moveCursor = (event) => {
-    const cursor = start + (event.clientX - HEADER_WIDTH_PX) / pxPerSeconds
+    const cursor = viewStart + (event.clientX - HEADER_WIDTH_PX) / pxPerSeconds
     setCursor(cursor)
   }
 
