@@ -25,6 +25,7 @@ export class GroupInstance implements GroupInstanceType {
   project: ProjectType
 
   constructor(project: ProjectType, raw: RawGroupInstanceType) {
+    this.project = project
     this.id = raw.id
     this.groupId = raw.group
     this.start = raw.start
