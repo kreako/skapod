@@ -1,11 +1,3 @@
-export function timeEndView(
-  startSec: number,
-  pxPerSeconds: number,
-  viewWidth: number
-): number {
-  return startSec + viewWidth / pxPerSeconds
-}
-
 export function isObjectInView(
   viewStart: number,
   viewEnd: number,
