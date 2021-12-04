@@ -10,6 +10,7 @@ type State = {
   start: number
   horizontalScrollRight: () => void
   horizontalScrollLeft: () => void
+  viewEnd: (width: number) => number
   cursor: number
   setCursor: (number) => void
 }
@@ -22,7 +23,7 @@ export const MIN_HORIZONTAL_ZOOM_OUT = 0.01
 export const MAX_VERTICAL_ZOOM_IN = 500
 export const MAX_VERTICAL_ZOOM_OUT = 25
 
-export const useStore = create<State>((set) => ({
+export const useStore = create<State>((set, get) => ({
   // Horizontal scale
   pxPerSeconds: 5,
   horizontalZoomIn: () =>
@@ -72,6 +73,8 @@ export const useStore = create<State>((set) => ({
       }
       return { start: start }
     }),
+  viewEnd: (viewWidth: number): number =>
+    get().start + viewWidth / get().pxPerSeconds,
   // Cursor position
   cursor: 0,
   setCursor: (c) =>
