@@ -12,7 +12,6 @@ import {
 export interface GroupType {
   id: string
   name: string
-  start: number
   content: GroupContentType[]
   color: ColorType
   display: GroupDisplayType
@@ -23,7 +22,6 @@ export interface GroupType {
 export class Group implements GroupType {
   id: string
   name: string
-  start: number
   content: GroupContentType[]
   color: ColorType
   display: GroupDisplayType
@@ -35,7 +33,6 @@ export class Group implements GroupType {
     this.project = project
     this.id = raw.id
     this.name = raw.name
-    this.start = raw.start
     this.content = raw.content.map((c) => new GroupContent(project, this, c))
     this.color = raw.color
     this.display = raw.display

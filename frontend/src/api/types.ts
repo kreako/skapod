@@ -49,7 +49,6 @@ export type RawClipType = {
 export type RawGroupType = {
   id: string
   name: string
-  start: number
   content: RawGroupContentType[]
   color: ColorType
   display: GroupDisplayType
