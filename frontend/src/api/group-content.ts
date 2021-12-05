@@ -50,12 +50,12 @@ export class GroupContent implements GroupContentType {
     throw new Error("this content is not a group !")
   }
 
-  // rootStart (in seconds) is the start of the group containing this content
+  // parentInstanceStart (in seconds) is the start of the group containing this content
   // 0 for root, groupInstance.start for others
   // viewStart (in seconds) is the start time of the viewport
   // viewEnd (in seconds) is the end time of the viewport
   isInView = (
-    rootStart: number,
+    parentInstanceStart: number,
     viewStart: number,
     viewEnd: number
   ): boolean => {
@@ -63,11 +63,11 @@ export class GroupContent implements GroupContentType {
     let length = null
     if (this.kind === GroupContentKindType.Clip) {
       const clipInstance = this.asClip()
-      start = rootStart + clipInstance.start
+      start = parentInstanceStart + clipInstance.start
       length = clipInstance.clip().length
     } else {
       const groupInstance = this.asGroup()
-      start = rootStart + groupInstance.start
+      start = parentInstanceStart + groupInstance.start
       length = groupInstance.group().length()
     }
     return isObjectInView(viewStart, viewEnd, start, length)

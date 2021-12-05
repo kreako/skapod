@@ -79,63 +79,63 @@ test("group-content isInView clip - larger than view", () => {
   expect(projectWith1Clip(0, 200).content[0].isInView(0, 20, 100)).toBeTruthy()
 })
 
-// With a rootStart = 5 - not really representative because I'm at the root of the project here
+// With a parentInstanceStart = 5 - not really representative because I'm at the root of the project here
 // But this seems ok because the GroupContent do not know its parent (root or GroupInstance)
-test("group-content isInView clip - rootStart=5 - fully in view", () => {
+test("group-content isInView clip - parentInstanceStart=5 - fully in view", () => {
   expect(
     projectWith1Clip(20 - 5, 80).content[0].isInView(5, 20, 100)
   ).toBeTruthy()
 })
 
-test("group-content isInView clip - rootStart=5 - align with start", () => {
+test("group-content isInView clip - parentInstanceStart=5 - align with start", () => {
   expect(
     projectWith1Clip(20 - 5, 81).content[0].isInView(5, 20, 100)
   ).toBeTruthy()
 })
 
-test("group-content isInView clip - rootStart=5 - align with end", () => {
+test("group-content isInView clip - parentInstanceStart=5 - align with end", () => {
   expect(
     projectWith1Clip(19 - 5, 81).content[0].isInView(5, 20, 100)
   ).toBeTruthy()
 })
 
-test("group-content isInView clip - rootStart=5 - not fully in view", () => {
+test("group-content isInView clip - parentInstanceStart=5 - not fully in view", () => {
   expect(
     projectWith1Clip(25 - 5, 70).content[0].isInView(5, 20, 100)
   ).toBeTruthy()
 })
 
-test("group-content isInView clip - rootStart=5 - at the start of the view", () => {
+test("group-content isInView clip - parentInstanceStart=5 - at the start of the view", () => {
   expect(
     projectWith1Clip(15 - 5, 6).content[0].isInView(5, 20, 100)
   ).toBeTruthy()
 })
 
-test("group-content isInView clip - rootStart=5 - not at the start of the view", () => {
+test("group-content isInView clip - parentInstanceStart=5 - not at the start of the view", () => {
   expect(
     projectWith1Clip(15 - 5, 5).content[0].isInView(5, 20, 100)
   ).toBeFalsy()
 })
 
-test("group-content isInView clip - rootStart=5 - at the end of the view", () => {
+test("group-content isInView clip - parentInstanceStart=5 - at the end of the view", () => {
   expect(
     projectWith1Clip(99 - 5, 6).content[0].isInView(5, 20, 100)
   ).toBeTruthy()
 })
 
-test("group-content isInView clip - rootStart=5 - not at the end of the view", () => {
+test("group-content isInView clip - parentInstanceStart=5 - not at the end of the view", () => {
   expect(
     projectWith1Clip(100 - 5, 5).content[0].isInView(5, 20, 100)
   ).toBeFalsy()
 })
 
-test("group-content isInView clip - rootStart=5 - not at all in view", () => {
+test("group-content isInView clip - parentInstanceStart=5 - not at all in view", () => {
   expect(
     projectWith1Clip(200 - 5, 5).content[0].isInView(5, 20, 100)
   ).toBeFalsy()
 })
 
-test("group-content isInView clip - rootStart=5 - larger than view", () => {
+test("group-content isInView clip - parentInstanceStart=5 - larger than view", () => {
   expect(projectWith1Clip(0, 200).content[0].isInView(5, 20, 100)).toBeTruthy()
 })
 
@@ -219,7 +219,7 @@ test("group-content length - make sure group 0 metrics are as expected ", () => 
   expect(complexProject().groups["0"].length()).toBe(40)
 })
 
-// With a rootStart = 0
+// With a parentInstanceStart = 0
 // group content[0] is from 10s to 50s
 test("group-content isInView group - fully in view", () => {
   expect(complexProject().content[0].isInView(0, 10, 50)).toBeTruthy()
@@ -261,45 +261,45 @@ test("group-content isInView group - larger than view", () => {
   expect(complexProject().content[0].isInView(0, 20, 30)).toBeTruthy()
 })
 
-// With a rootStart = 5 - not really representative because I'm at the root of the project here
+// With a parentInstanceStart = 5 - not really representative because I'm at the root of the project here
 // But this seems ok because the GroupContent do not know its parent (root or GroupInstance)
 // Everything looks like group content[0] is now from 15s to 55s
-test("group-content isInView group - rootStart=5 - fully in view", () => {
+test("group-content isInView group - parentInstanceStart=5 - fully in view", () => {
   expect(complexProject().content[0].isInView(5, 15, 55)).toBeTruthy()
 })
 
-test("group-content isInView group - rootStart=5 - align with start", () => {
+test("group-content isInView group - parentInstanceStart=5 - align with start", () => {
   expect(complexProject().content[0].isInView(5, 15, 54)).toBeTruthy()
 })
 
-test("group-content isInView group - rootStart=5 - align with end", () => {
+test("group-content isInView group - parentInstanceStart=5 - align with end", () => {
   expect(complexProject().content[0].isInView(5, 25, 55)).toBeTruthy()
 })
 
-test("group-content isInView group - rootStart=5 - not fully in view", () => {
+test("group-content isInView group - parentInstanceStart=5 - not fully in view", () => {
   expect(complexProject().content[0].isInView(5, 10, 60)).toBeTruthy()
 })
 
-test("group-content isInView group - rootStart=5 - at the start of the view", () => {
+test("group-content isInView group - parentInstanceStart=5 - at the start of the view", () => {
   expect(complexProject().content[0].isInView(5, 10, 20)).toBeTruthy()
 })
 
-test("group-content isInView group - rootStart=5 - not at the start of the view", () => {
+test("group-content isInView group - parentInstanceStart=5 - not at the start of the view", () => {
   expect(complexProject().content[0].isInView(5, 55, 105)).toBeFalsy()
 })
 
-test("group-content isInView group - rootStart=5 - at the end of the view", () => {
+test("group-content isInView group - parentInstanceStart=5 - at the end of the view", () => {
   expect(complexProject().content[0].isInView(5, 54, 105)).toBeTruthy()
 })
 
-test("group-content isInView group - rootStart=5 - not at the end of the view", () => {
+test("group-content isInView group - parentInstanceStart=5 - not at the end of the view", () => {
   expect(complexProject().content[0].isInView(5, 7, 15)).toBeFalsy()
 })
 
-test("group-content isInView group - rootStart=5 - not at all in view", () => {
+test("group-content isInView group - parentInstanceStart=5 - not at all in view", () => {
   expect(complexProject().content[0].isInView(5, 65, 105)).toBeFalsy()
 })
 
-test("group-content isInView group - rootStart=5 - larger than view", () => {
+test("group-content isInView group - parentInstanceStart=5 - larger than view", () => {
   expect(complexProject().content[0].isInView(5, 25, 35)).toBeTruthy()
 })
