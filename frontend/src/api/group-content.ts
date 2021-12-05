@@ -13,8 +13,8 @@ import { isObjectInView } from "./view"
 export interface GroupContentType {
   kind: GroupContentKindType
   data: GroupInstanceType | ClipInstanceType
-  asClip: () => ClipInstanceType
-  asGroup: () => GroupInstanceType
+  asClipInstance: () => ClipInstanceType
+  asGroupInstance: () => GroupInstanceType
   isInView: (rootStart: number, viewStart: number, viewEnd: number) => boolean
   id: () => string
 }
@@ -36,14 +36,14 @@ export class GroupContent implements GroupContentType {
 
   id = (): string => this.data.id
 
-  asClip = (): ClipInstanceType => {
+  asClipInstance = (): ClipInstanceType => {
     if (this.kind === GroupContentKindType.Clip) {
       return this.data as ClipInstanceType
     }
     throw new Error("This content is not a clip !")
   }
 
-  asGroup = (): GroupInstanceType => {
+  asGroupInstance = (): GroupInstanceType => {
     if (this.kind === GroupContentKindType.Group) {
       return this.data as GroupInstanceType
     }
@@ -62,11 +62,11 @@ export class GroupContent implements GroupContentType {
     let start = null
     let length = null
     if (this.kind === GroupContentKindType.Clip) {
-      const clipInstance = this.asClip()
+      const clipInstance = this.asClipInstance()
       start = parentInstanceStart + clipInstance.start
       length = clipInstance.clip().length
     } else {
-      const groupInstance = this.asGroup()
+      const groupInstance = this.asGroupInstance()
       start = parentInstanceStart + groupInstance.start
       length = groupInstance.group().length()
     }

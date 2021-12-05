@@ -5,10 +5,10 @@ export function contentLength(content: GroupContentType[]) {
   let l = 0
   for (const c of content) {
     if (c.kind === GroupContentKindType.Clip) {
-      const clipInstance = c.asClip()
+      const clipInstance = c.asClipInstance()
       l = Math.max(l, clipInstance.start + clipInstance.clip().length)
     } else {
-      const groupInstance = c.asGroup()
+      const groupInstance = c.asGroupInstance()
       l = Math.max(l, groupInstance.start + groupInstance.group().length())
     }
   }
