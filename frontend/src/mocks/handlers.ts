@@ -2,6 +2,7 @@ import { DefaultRequestBody, rest } from "msw"
 import {
   ColorType,
   GroupContentKindType,
+  GroupDisplayType,
   RawProjectType,
   SourceKindType,
 } from "../api/types"
@@ -110,7 +111,41 @@ const clips = {
   },
 }
 
-const groups = {}
+const crashInstance = (id, start, row) => ({
+  kind: GroupContentKindType.Clip,
+  data: {
+    id: id,
+    clip: "0", // crash
+    start: start,
+    row: row,
+    muted: false,
+    color: ColorType.Green,
+  },
+})
+
+const kickInstance = (id, start, row) => ({
+  kind: GroupContentKindType.Clip,
+  data: {
+    id: id,
+    clip: "1", // kick
+    start: start,
+    row: row,
+    muted: false,
+    color: ColorType.Yellow,
+  },
+})
+
+const groups = {
+  "0": {
+    id: "0",
+    name: "Group 0",
+    content: Array.from(Array(20).keys()).map((k) =>
+      k % 2 === 0
+        ? crashInstance((4 + k).toString(), k + 0.5, 0)
+        : kickInstance((4 + k).toString(), k + 1.0, 1)
+    ),
+  },
+}
 
 const defaultProject = {
   id: "0",
@@ -149,6 +184,18 @@ const defaultProject = {
         row: 0,
         muted: false,
         color: ColorType.Blue,
+      },
+    },
+    {
+      kind: GroupContentKindType.Group,
+      data: {
+        id: "3",
+        group: "0",
+        start: 5,
+        row: 2,
+        muted: false,
+        color: ColorType.Orange,
+        display: GroupDisplayType.Expanded,
       },
     },
   ],
