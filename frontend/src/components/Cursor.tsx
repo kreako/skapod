@@ -3,12 +3,12 @@ import { useStore } from "../store"
 const CURSOR_WIDTH_PX = 13
 
 export default function Cursor() {
-  const { pxPerSeconds, start, cursor } = useStore((state) => ({
+  const { pxPerSeconds, viewStart, cursor } = useStore((state) => ({
     pxPerSeconds: state.pxPerSeconds,
-    start: state.start,
+    viewStart: state.viewStart,
     cursor: state.cursor,
   }))
-  const position = (cursor - start) * pxPerSeconds
+  const position = (cursor - viewStart) * pxPerSeconds
   const topStyle = {
     left: `${position - CURSOR_WIDTH_PX / 2}px`,
     width: `${CURSOR_WIDTH_PX}px`,
