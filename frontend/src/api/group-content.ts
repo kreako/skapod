@@ -16,6 +16,7 @@ export interface GroupContentType {
   asClip: () => ClipInstanceType
   asGroup: () => GroupInstanceType
   isInView: (rootStart: number, viewStart: number, viewEnd: number) => boolean
+  id: () => string
 }
 
 export class GroupContent implements GroupContentType {
@@ -32,6 +33,8 @@ export class GroupContent implements GroupContentType {
       this.data = new GroupInstance(project, raw.data as RawGroupInstanceType)
     }
   }
+
+  id = (): string => this.data.id
 
   asClip = (): ClipInstanceType => {
     if (this.kind === GroupContentKindType.Clip) {
