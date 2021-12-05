@@ -1,6 +1,6 @@
 import { GroupType } from "./group"
 import { ProjectType } from "./project"
-import { ColorType, RawGroupInstanceType } from "./types"
+import { ColorType, GroupDisplayType, RawGroupInstanceType } from "./types"
 
 export interface GroupInstanceType {
   id: string
@@ -11,6 +11,7 @@ export interface GroupInstanceType {
   row: number
   muted: boolean
   color: ColorType
+  display: GroupDisplayType
   length: () => number
   group: () => GroupType
 }
@@ -22,6 +23,7 @@ export class GroupInstance implements GroupInstanceType {
   row: number
   muted: boolean
   color: ColorType
+  display: GroupDisplayType
   project: ProjectType
 
   constructor(project: ProjectType, raw: RawGroupInstanceType) {
@@ -32,6 +34,7 @@ export class GroupInstance implements GroupInstanceType {
     this.row = raw.row
     this.muted = raw.muted
     this.color = raw.color
+    this.display = raw.display
   }
 
   length = (): number => this.group().length()

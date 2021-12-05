@@ -50,9 +50,6 @@ export type RawGroupType = {
   id: string
   name: string
   content: RawGroupContentType[]
-  color: ColorType
-  display: GroupDisplayType
-  muted: boolean
 }
 
 export enum GroupDisplayType {
@@ -87,6 +84,7 @@ export type RawGroupInstanceType = {
   row: number
   muted: boolean
   color: ColorType
+  display: GroupDisplayType
 }
 
 export enum ColorType {

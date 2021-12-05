@@ -195,9 +195,6 @@ const complexProject = () =>
             },
           },
         ],
-        color: ColorType.Blue,
-        display: GroupDisplayType.Collapsed,
-        muted: false,
       },
     },
     content: [
@@ -210,6 +207,7 @@ const complexProject = () =>
           row: 0,
           muted: false,
           color: ColorType.Blue,
+          display: GroupDisplayType.Collapsed,
         },
       },
     ],
