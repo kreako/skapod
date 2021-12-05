@@ -22,7 +22,7 @@ function GroupChild({ kind, props }: GroupChildProps) {
   }
 }
 
-type GroupProps = {
+export type GroupProps = {
   id: string
   name: string
   top: number
