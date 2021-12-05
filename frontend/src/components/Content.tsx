@@ -1,11 +1,43 @@
 import React from "react"
 import { useElementSize } from "usehooks-ts"
-import { ClipType, GroupContentKindType, ProjectType } from "../api/types"
+import { clipAdapter } from "../adapter/clip-adapter"
+import { TIMESCALE_HEIGHT_PX } from "../adapter/ui"
+import { GroupContentType } from "../api/group-content"
+import { ProjectType } from "../api/project"
+import { GroupContentKindType } from "../api/types"
 import { useStore } from "../store"
-import { fromArrayToIdObjects } from "../utils/objects"
-import { isObjectInView, timeEndView } from "../utils/view"
 import Clip from "./Clip"
 import Group from "./Group"
+
+type GroupChildProps = {
+  content: GroupContentType
+  viewStart: number
+  pxPerSeconds: number
+  clipHeight: number
+}
+
+function ContentChild({
+  content,
+  viewStart,
+  pxPerSeconds,
+  clipHeight,
+}: GroupChildProps) {
+  if (content.kind === GroupContentKindType.Group) {
+    const group = content.asGroupInstance()
+    return <Group />
+  } else {
+    const clipInstance = content.asClipInstance()
+    const props = clipAdapter({
+      clipInstance,
+      parentTop: TIMESCALE_HEIGHT_PX,
+      parentInstanceStart: 0,
+      viewStart,
+      pxPerSeconds,
+      clipHeight,
+    })
+    return <Clip {...props} />
+  }
+}
 
 type ContentProps = {
   project: ProjectType
@@ -13,40 +45,30 @@ type ContentProps = {
 
 export default function Content({ project }: ContentProps) {
   const [rootRef, { width, height }] = useElementSize()
-  const { pxPerSeconds, start, clipHeight } = useStore((state) => ({
-    pxPerSeconds: state.pxPerSeconds,
-    clipHeight: state.clipHeight,
-    start: state.start,
-  }))
-  const end = timeEndView(start, pxPerSeconds, width)
-  const objectsInView = project.content.filter((c) => {
-    const objectLength =
-      c.kind === GroupContentKindType.Clip
-        ? project.clips[c.data.id].length
-        : project.groups[c.data.id]
-    const objectStart = c.data.start
-    const objectLength = object.length
-    return isObjectInView(start, end, c.data.start, c.data.id)
-  })
+  const { pxPerSeconds, viewStart, viewEnd, clipHeight } = useStore(
+    (state) => ({
+      pxPerSeconds: state.pxPerSeconds,
+      clipHeight: state.clipHeight,
+      viewStart: state.viewStart,
+      viewEnd: state.viewEnd(width),
+    })
+  )
+  const objectsInView = project.content.filter((c) =>
+    c.isInView(0, viewStart, viewEnd)
+  )
   return (
     <div ref={rootRef} className="absolute inset-0">
-      {/* in sync with pt-12 in Header component */}
-      <div className="mt-12">
-        {project.tracks.map((t) => (
-          <React.Fragment key={t.id}>
-            <Track
-              track={t}
-              clips={clipsIndex}
-              start={start}
-              end={end}
-              pxPerSeconds={pxPerSeconds}
-            />
-            <div
-              className={`${TRACK_SEPARATOR_HEIGHT_CLASSNAME} bg-sky-400`}
-            ></div>
-          </React.Fragment>
+      {/* in sync with timescale height : 1.5 rem + 0.5 rem = 2 rem = 32 px = mt-8 */}
+      <div className="mt-8">
+        {objectsInView.map((o) => (
+          <ContentChild
+            key={o.id()}
+            content={o}
+            viewStart={viewStart}
+            pxPerSeconds={pxPerSeconds}
+            clipHeight={clipHeight}
+          />
         ))}
-        {width} * {height}
       </div>
     </div>
   )
