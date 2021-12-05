@@ -141,8 +141,8 @@ const groups = {
     name: "Group 0",
     content: Array.from(Array(20).keys()).map((k) =>
       k % 2 === 0
-        ? crashInstance((4 + k).toString(), k + 0.5, 0)
-        : kickInstance((4 + k).toString(), k + 1.0, 1)
+        ? crashInstance(`group-0-${k}`, k + 0.5, 0)
+        : kickInstance(`group-0-${k}`, k + 1.0, 1)
     ),
   },
 }
@@ -156,7 +156,7 @@ const defaultProject = {
     {
       kind: GroupContentKindType.Clip,
       data: {
-        id: "0",
+        id: "root-0",
         clip: "6",
         start: 0,
         row: 0,
@@ -167,7 +167,7 @@ const defaultProject = {
     {
       kind: GroupContentKindType.Clip,
       data: {
-        id: "1",
+        id: "root-1",
         clip: "5",
         start: 4,
         row: 1,
@@ -178,7 +178,7 @@ const defaultProject = {
     {
       kind: GroupContentKindType.Clip,
       data: {
-        id: "2",
+        id: "root-2",
         clip: "5",
         start: 59 + 4 - 2,
         row: 0,
@@ -189,13 +189,24 @@ const defaultProject = {
     {
       kind: GroupContentKindType.Group,
       data: {
-        id: "3",
+        id: "root-3",
         group: "0",
         start: 5,
         row: 2,
         muted: false,
         color: ColorType.Orange,
         display: GroupDisplayType.Expanded,
+      },
+    },
+    {
+      kind: GroupContentKindType.Clip,
+      data: {
+        id: "root-4",
+        clip: "3",
+        start: 21,
+        row: 3,
+        muted: false,
+        color: ColorType.Gray,
       },
     },
   ],
