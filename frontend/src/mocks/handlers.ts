@@ -132,7 +132,7 @@ const defaultProject = {
     {
       kind: GroupContentKindType.Clip,
       data: {
-        id: "0",
+        id: "1",
         clip: "5",
         start: 4,
         row: 1,
@@ -143,7 +143,7 @@ const defaultProject = {
     {
       kind: GroupContentKindType.Clip,
       data: {
-        id: "0",
+        id: "2",
         clip: "5",
         start: 59 + 4 - 2,
         row: 0,
