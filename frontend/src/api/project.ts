@@ -1,7 +1,7 @@
 import { Clip, ClipType } from "./clip"
 import { Group, GroupType } from "./group"
-import { GroupContent, GroupContentType } from "./group-content"
-import { contentLength } from "./length"
+import { GroupContentType } from "./group-content"
+import { GroupContentArray, GroupContentArrayType } from "./group-content-array"
 import { Source, SourceType } from "./source"
 import { RawProjectType } from "./types"
 
@@ -10,7 +10,7 @@ export interface ProjectType {
   sources: SourceIndexType
   clips: ClipIndexType
   groups: GroupIndexType
-  content: GroupContentType[]
+  content: GroupContentArrayType
   length: () => number
 }
 
@@ -31,7 +31,7 @@ export class Project implements ProjectType {
   sources: SourceIndexType
   clips: ClipIndexType
   groups: GroupIndexType
-  content: GroupContentType[]
+  content: GroupContentArrayType
   constructor(raw: RawProjectType) {
     this.id = raw.id
 
@@ -50,8 +50,8 @@ export class Project implements ProjectType {
       this.groups[id] = new Group(this, raw.groups[id])
     }
 
-    this.content = raw.content.map((c) => new GroupContent(this, c))
+    this.content = new GroupContentArray(this, raw.content)
   }
 
-  length = (): number => contentLength(this.content)
+  length = (): number => this.content.length()
 }

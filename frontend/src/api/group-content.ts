@@ -1,5 +1,4 @@
 import { ClipInstance, ClipInstanceType } from "./clip-instance"
-import { GroupType } from "./group"
 import { GroupInstance, GroupInstanceType } from "./group-instance"
 import { ProjectType } from "./project"
 import {
@@ -15,7 +14,11 @@ export interface GroupContentType {
   data: GroupInstanceType | ClipInstanceType
   asClipInstance: () => ClipInstanceType
   asGroupInstance: () => GroupInstanceType
-  isInView: (rootStart: number, viewStart: number, viewEnd: number) => boolean
+  isInView: (
+    parentInstanceStart: number,
+    viewStart: number,
+    viewEnd: number
+  ) => boolean
   id: () => string
 }
 
