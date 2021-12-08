@@ -204,7 +204,7 @@ const defaultProject = {
         id: "root-4",
         clip: "3",
         start: 21,
-        row: 3,
+        row: 4,
         muted: false,
         color: ColorType.Gray,
       },
