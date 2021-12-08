@@ -9,6 +9,7 @@ export type clipAdapterParams = {
   viewStart: number
   pxPerSeconds: number
   clipHeight: number
+  displayHeader: boolean
 }
 
 export function clipAdapter({
@@ -18,6 +19,7 @@ export function clipAdapter({
   viewStart,
   pxPerSeconds,
   clipHeight,
+  displayHeader,
 }: clipAdapterParams): ClipProps {
   const onMutedClick = () => {
     console.log("onMutedClick")
@@ -46,6 +48,7 @@ export function clipAdapter({
     height: clipHeight,
     color: clipInstance.color,
     muted: clipInstance.muted,
+    displayHeader: displayHeader,
     onMutedClick,
     onMenuClick,
   }
