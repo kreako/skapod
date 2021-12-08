@@ -53,9 +53,7 @@ export default function Content({ project }: ContentProps) {
       viewEnd: state.viewEnd(width),
     })
   )
-  const objectsInView = project.content.filter((c) =>
-    c.isInView(0, viewStart, viewEnd)
-  )
+  const objectsInView = project.content.inView(0, viewStart, viewEnd)
   return (
     <div ref={rootRef} className="absolute inset-0">
       {/* in sync with timescale height : 1.5 rem + 0.5 rem = 2 rem = 32 px = mt-8 */}
