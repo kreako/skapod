@@ -1,4 +1,3 @@
-import { classProperty } from "@babel/types"
 import Draggable from "react-draggable"
 import { ColorType, GroupContentKindType, GroupDisplayType } from "../api/types"
 import { colorToBgClassName } from "../utils/colors"
