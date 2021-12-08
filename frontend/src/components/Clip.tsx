@@ -51,7 +51,7 @@ export default function Clip(props: ClipProps) {
         )}
         <div className="absolute inset-0 z-0">
           <WaveCanvas
-            width={props.width}
+            width={props.width - 2}
             height={props.height}
             color={props.color}
           />
