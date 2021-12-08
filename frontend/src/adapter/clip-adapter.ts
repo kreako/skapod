@@ -36,8 +36,7 @@ export function clipAdapter({
 
   const width = clip.length * pxPerSeconds
 
-  const top =
-    parentTop + (clipHeight + CLIP_BOTTOM_MARGIN_PX) * clipInstance.row
+  const top = parentTop + clipHeight * clipInstance.row
 
   return {
     id: clipInstance.id,
