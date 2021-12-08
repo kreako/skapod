@@ -34,6 +34,7 @@ function ContentChild({
       viewStart,
       pxPerSeconds,
       clipHeight,
+      displayHeader: true,
     })
     return <Clip {...props} />
   }
