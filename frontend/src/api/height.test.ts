@@ -1,4 +1,3 @@
-import { RowHeight } from "./height"
 import { Project } from "./project"
 import {
   ColorType,
@@ -6,66 +5,6 @@ import {
   GroupDisplayType,
   SourceKindType,
 } from "./types"
-
-test("height - max", () => {
-  const h1 = new RowHeight(1, 0)
-  const h2 = new RowHeight(1, 1)
-
-  const r1 = h1.max(h2)
-  expect(r1.clip).toBe(1)
-  expect(r1.groupHeader).toBe(1)
-
-  const r2 = h2.max(h1)
-  expect(r2.clip).toBe(1)
-  expect(r2.groupHeader).toBe(1)
-})
-
-test("height - max with null", () => {
-  const h1 = new RowHeight(1, 0)
-  const n = RowHeight.null()
-
-  const r1 = h1.max(n)
-  expect(r1.clip).toBe(1)
-  expect(r1.groupHeader).toBe(0)
-
-  const r2 = n.max(h1)
-  expect(r2.clip).toBe(1)
-  expect(r2.groupHeader).toBe(0)
-})
-
-test("height - add with null", () => {
-  const h1 = new RowHeight(1, 0)
-  const n = RowHeight.null()
-
-  const r1 = h1.add(n)
-  expect(r1.clip).toBe(1)
-  expect(r1.groupHeader).toBe(0)
-
-  const r2 = n.add(h1)
-  expect(r2.clip).toBe(1)
-  expect(r2.groupHeader).toBe(0)
-})
-
-test("height - add", () => {
-  const h1 = new RowHeight(1, 0)
-  const h2 = new RowHeight(3, 2)
-
-  const r1 = h1.add(h2)
-  expect(r1.clip).toBe(4)
-  expect(r1.groupHeader).toBe(2)
-  expect(h1.clip).toBe(4)
-  expect(h1.groupHeader).toBe(2)
-  expect(h2.clip).toBe(3)
-  expect(h2.groupHeader).toBe(2)
-
-  const r2 = h2.add(h1)
-  expect(r2.clip).toBe(7)
-  expect(r2.groupHeader).toBe(4)
-  expect(h1.clip).toBe(4)
-  expect(h1.groupHeader).toBe(2)
-  expect(h2.clip).toBe(7)
-  expect(h2.groupHeader).toBe(4)
-})
 
 test("height - a single clip", () => {
   const clipInstance = (row) => ({
@@ -114,9 +53,7 @@ test("height - a single clip", () => {
     },
     content: [groupInstance(0, true)],
   })
-  const h = project.groups["0"].expandedHeight()
-  expect(h.clip).toBe(1)
-  expect(h.groupHeader).toBe(1)
+  expect(project.groups["0"].expandedHeight()).toBe(1)
 })
 
 test("height - a complex group", () => {
@@ -194,19 +131,11 @@ test("height - a complex group", () => {
     },
     content: [groupInstance("0", 0, true)],
   })
-  const h2 = project.groups["2"].expandedHeight()
-  expect(h2.clip).toBe(2)
-  expect(h2.groupHeader).toBe(1)
+  expect(project.groups["2"].expandedHeight()).toBe(2)
 
-  const h1 = project.groups["1"].expandedHeight()
-  expect(h1.clip).toBe(2 + 1 + 2 + 1) // 2 groups and 2 clips : 6
-  expect(h1.groupHeader).toBe(2 + 1) // 2 groups and the root one
+  expect(project.groups["1"].expandedHeight()).toBe(2 + 1 + 2 + 1) // 2 groups and 2 clips : 6
 
-  const h0 = project.groups["0"].expandedHeight()
-  expect(h0.clip).toBe(1 + 6 + 6 + 1) // 2 groups and 2 clips
-  expect(h0.groupHeader).toBe(2 * 3 + 1) // 2 groups with 3 headers and the root one
+  expect(project.groups["0"].expandedHeight()).toBe(1 + 6 + 6 + 1) // 2 groups and 2 clips
 
-  const h = project.content.height()
-  expect(h.clip).toBe(1 + 6 + 6 + 1) // 2 groups and 2 clips
-  expect(h0.groupHeader).toBe(2 * 3 + 1) // 2 groups with 3 headers and the root one
+  expect(project.content.height()).toBe(1 + 6 + 6 + 1) // 2 groups and 2 clips
 })
