@@ -1,5 +1,4 @@
 import { GroupContentArray, GroupContentArrayType } from "./group-content-array"
-import { RowHeight } from "./height"
 import { ProjectType } from "./project"
 import { RawGroupType } from "./types"
 
@@ -8,7 +7,7 @@ export interface GroupType {
   name: string
   content: GroupContentArrayType
   length: () => number
-  expandedHeight: () => RowHeight
+  expandedHeight: () => number
 }
 
 export class Group implements GroupType {
@@ -27,11 +26,5 @@ export class Group implements GroupType {
 
   length = (): number => this.content.length()
 
-  expandedHeight = (): RowHeight => {
-    // all of my content
-    const h = this.content.height()
-    // and my header
-    h.groupHeader += 1
-    return h
-  }
+  expandedHeight = (): number => this.content.height()
 }

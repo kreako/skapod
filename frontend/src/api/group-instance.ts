@@ -1,5 +1,4 @@
 import { GroupType } from "./group"
-import { RowHeight } from "./height"
 import { ProjectType } from "./project"
 import { ColorType, GroupDisplayType, RawGroupInstanceType } from "./types"
 
@@ -15,7 +14,7 @@ export interface GroupInstanceType {
   display: GroupDisplayType
   length: () => number
   group: () => GroupType
-  height: () => RowHeight
+  height: () => number
 }
 
 export class GroupInstance implements GroupInstanceType {
@@ -43,9 +42,9 @@ export class GroupInstance implements GroupInstanceType {
 
   group = (): GroupType => this.project.groups[this.groupId]
 
-  height = (): RowHeight => {
+  height = (): number => {
     if (this.display === GroupDisplayType.Collapsed) {
-      return RowHeight.clipHeight()
+      return 1
     } else {
       return this.group().expandedHeight()
     }

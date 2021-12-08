@@ -2,7 +2,6 @@ import { GroupContent, GroupContentType } from "./group-content"
 import { ProjectType } from "./project"
 import { GroupContentKindType, RawGroupContentType } from "./types"
 import { contentLength } from "./length"
-import { RowHeight } from "./height"
 
 export interface GroupContentArrayType {
   content: GroupContentType[]
@@ -13,8 +12,8 @@ export interface GroupContentArrayType {
     viewEnd: number
   ) => GroupContentType[]
   maxRow: () => number
-  rowHeight: (row: number) => RowHeight
-  height: () => RowHeight
+  rowHeight: (row: number) => number
+  height: () => number
 }
 
 export class GroupContentArray implements GroupContentArrayType {
@@ -23,6 +22,8 @@ export class GroupContentArray implements GroupContentArrayType {
 
   constructor(project: ProjectType, raw: RawGroupContentType[]) {
     this.project = project
+    // Sort by row ascending order
+    raw.sort((a, b) => a.data.row - b.data.row)
     this.content = raw.map((c) => new GroupContent(project, c))
   }
 
@@ -39,26 +40,26 @@ export class GroupContentArray implements GroupContentArrayType {
 
   maxRow = (): number => Math.max(0, ...this.content.map((c) => c.data.row))
 
-  rowHeight = (row: number): RowHeight => {
-    let height = RowHeight.null()
+  rowHeight = (row: number): number => {
+    let height = 0
     for (const c of this.content) {
       if (c.data.row === row) {
         if (c.kind === GroupContentKindType.Clip) {
-          height = height.max(RowHeight.clipHeight())
+          height = Math.max(height, 1)
         } else {
           const groupInstance = c.asGroupInstance()
-          height = height.max(groupInstance.height())
+          height = Math.max(height, groupInstance.height())
         }
       }
     }
     return height
   }
 
-  height = (): RowHeight => {
-    let height = RowHeight.null()
+  height = (): number => {
+    let height = 0
     const maxRow = this.maxRow()
     for (let row = 0; row <= maxRow; row++) {
-      height = height.add(this.rowHeight(row))
+      height += this.rowHeight(row)
     }
     return height
   }
