@@ -1,6 +1,7 @@
 import React from "react"
 import { useElementSize } from "usehooks-ts"
 import { clipAdapter } from "../adapter/clip-adapter"
+import { groupAdapter } from "../adapter/group-adapter"
 import { TIMESCALE_HEIGHT_PX } from "../adapter/ui"
 import { GroupContentType } from "../api/group-content"
 import { ProjectType } from "../api/project"
@@ -23,8 +24,16 @@ function ContentChild({
   clipHeight,
 }: GroupChildProps) {
   if (content.kind === GroupContentKindType.Group) {
-    const group = content.asGroupInstance()
-    return <Group />
+    const groupInstance = content.asGroupInstance()
+    const props = groupAdapter({
+      groupInstance,
+      parentTop: TIMESCALE_HEIGHT_PX,
+      parentInstanceStart: 0,
+      viewStart,
+      pxPerSeconds,
+      clipHeight,
+    })
+    return <Group {...props} />
   } else {
     const clipInstance = content.asClipInstance()
     const props = clipAdapter({
