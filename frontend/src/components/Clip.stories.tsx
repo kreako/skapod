@@ -30,6 +30,7 @@ Blue.args = {
   height: 192,
   color: "blue",
   muted: false,
+  displayHeader: true,
 }
 
 export const Muted = Template.bind({})
@@ -49,6 +50,12 @@ export const SmallWidthMuted = Template.bind({})
 SmallWidthMuted.args = {
   ...Muted.args,
   width: 49,
+}
+
+export const BlueNoHeader = Template.bind({})
+BlueNoHeader.args = {
+  ...Blue.args,
+  displayHeader: false,
 }
 
 export const Green = Template.bind({})
