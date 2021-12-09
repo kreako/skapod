@@ -32,6 +32,7 @@ Blue.args = {
   color: "blue",
   muted: false,
   display: GroupDisplayType.Expanded,
+  displayHeader: true,
 
   children: [
     {
@@ -65,6 +66,7 @@ Blue.args = {
         color: "orange",
         muted: false,
         display: GroupDisplayType.Expanded,
+        displayHeader: false,
         children: [
           {
             id: "0",
@@ -157,6 +159,7 @@ Blue.args = {
         color: "gray",
         muted: false,
         display: GroupDisplayType.Collapsed,
+        displayHeader: false,
         children: [],
       },
     },

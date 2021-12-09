@@ -32,13 +32,17 @@ export type GroupProps = {
   muted: boolean
   display: GroupDisplayType
   children: GroupChildProps[]
+  displayHeader: boolean
   onMutedClick: () => void
   onMenuClick: () => void
 }
 
 export default function Group(props: GroupProps) {
   // header is 24px - 1.5rem - h-6 so a 60px margin seems ok
-  const displayHeader = props.height > 60
+  let displayHeader = props.height > 60
+  if (!props.displayHeader) {
+    displayHeader = false
+  }
   const bg = colorToBgClassName(props.color)
   const mutedClassName = props.muted ? "opacity-25" : ""
   const style = {
