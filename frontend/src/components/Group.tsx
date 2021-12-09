@@ -5,7 +5,7 @@ import Clip, { ClipProps } from "./Clip"
 import { ClipGroupHeader } from "./ClipGroupHeader"
 import WaveCanvas from "./WaveCanvas"
 
-type GroupChildProps = {
+export type GroupChildProps = {
   id: string
   kind: GroupContentKindType
   props: GroupProps | ClipProps
