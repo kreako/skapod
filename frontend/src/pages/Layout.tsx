@@ -7,7 +7,6 @@ import { fetchProject, projectKeys } from "../api/handlers"
 import Content from "../components/Content"
 import Toolbar from "../components/Toolbar"
 import Cursor from "../components/Cursor"
-import { HEADER_WIDTH_PX } from "../utils/ui"
 
 export default function Layout() {
   const {
@@ -52,7 +51,7 @@ export default function Layout() {
   })
 
   const moveCursor = (event) => {
-    const cursor = viewStart + (event.clientX - HEADER_WIDTH_PX) / pxPerSeconds
+    const cursor = viewStart + event.clientX / pxPerSeconds
     setCursor(cursor)
   }
 
