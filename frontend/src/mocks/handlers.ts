@@ -141,8 +141,8 @@ const groups = {
     name: "Group 0",
     content: Array.from(Array(20).keys()).map((k) =>
       k % 2 === 0
-        ? crashInstance(`group-0-${k}`, k + 0.5, 0)
-        : kickInstance(`group-0-${k}`, k + 1.0, 1)
+        ? crashInstance(`group-0-${k}`, k, 0)
+        : kickInstance(`group-0-${k}`, k + 0.5, 1)
     ),
   },
 }
