@@ -59,7 +59,7 @@ export default function Group(props: GroupProps) {
   return (
     <Draggable handle={dragHandleSelector}>
       <div
-        className={`${bg} ${mutedClassName} absolute border border-sky-800 rounded-md z-10`}
+        className={`${bg} ${mutedClassName} absolute border border-sky-800 rounded-md z-10 shadow-md overflow-hidden`}
         style={style}
       >
         {displayHeader && (

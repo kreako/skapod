@@ -42,7 +42,7 @@ export default function Clip(props: ClipProps) {
   return (
     <Draggable handle={dragHandleSelector}>
       <div
-        className={`${bg} ${mutedClassName} ${borderClassName} border-sky-800 absolute rounded-md z-10`}
+        className={`${bg} ${mutedClassName} ${borderClassName} border-sky-800 absolute rounded-md z-10 shadow-md overflow-hidden`}
         style={style}
       >
         {displayHeader && (
