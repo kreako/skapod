@@ -145,6 +145,36 @@ const groups = {
         : kickInstance(`group-0-${k}`, k + 0.5, 1)
     ),
   },
+  "1": {
+    id: "1",
+    name: "Group 1",
+    content: [
+      {
+        kind: GroupContentKindType.Group,
+        data: {
+          id: "group-1-0",
+          group: "0",
+          start: 0,
+          row: 0,
+          muted: false,
+          color: ColorType.Yellow,
+          display: GroupDisplayType.Expanded,
+        },
+      },
+      {
+        kind: GroupContentKindType.Group,
+        data: {
+          id: "group-1-1",
+          group: "0",
+          start: 23,
+          row: 2,
+          muted: false,
+          color: ColorType.Yellow,
+          display: GroupDisplayType.Expanded,
+        },
+      },
+    ],
+  },
 }
 
 const defaultProject = {
@@ -207,6 +237,18 @@ const defaultProject = {
         row: 4,
         muted: false,
         color: ColorType.Gray,
+      },
+    },
+    {
+      kind: GroupContentKindType.Group,
+      data: {
+        id: "root-5",
+        group: "1",
+        start: 60,
+        row: 2,
+        muted: false,
+        color: ColorType.Yellow,
+        display: GroupDisplayType.Expanded,
       },
     },
   ],
