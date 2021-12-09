@@ -37,10 +37,12 @@ export default function Clip(props: ClipProps) {
   // including .header of children, so make it "unique" to each group/clip
   const dragHandleClassName = `header-clip-${props.id}`
   const dragHandleSelector = `.${dragHandleClassName}`
+
+  const borderClassName = props.width < 3 ? "border-l" : "border "
   return (
     <Draggable handle={dragHandleSelector}>
       <div
-        className={`${bg} ${mutedClassName} absolute border border-sky-800 rounded-md z-10`}
+        className={`${bg} ${mutedClassName} ${borderClassName} border-sky-800 absolute rounded-md z-10`}
         style={style}
       >
         {displayHeader && (
