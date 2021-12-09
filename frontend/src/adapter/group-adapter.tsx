@@ -5,7 +5,6 @@ import { GroupChildProps, GroupProps } from "../components/Group"
 export type GroupAdapterParams = {
   groupInstance: GroupInstanceType
   parentTop: number
-  parentInstanceStart: number
   viewStart: number
   pxPerSeconds: number
   clipHeight: number
@@ -101,7 +100,6 @@ function produceChildrenProps(
 export function groupAdapter({
   groupInstance,
   parentTop,
-  parentInstanceStart,
   viewStart,
   pxPerSeconds,
   clipHeight,
@@ -116,8 +114,7 @@ export function groupAdapter({
 
   const group = groupInstance.group()
 
-  const absoluteStart = parentInstanceStart + groupInstance.start
-  const left = (absoluteStart - viewStart) * pxPerSeconds
+  const left = (groupInstance.start - viewStart) * pxPerSeconds
   const width = group.length() * pxPerSeconds
   const top = parentTop + clipHeight * groupInstance.row
   const height = groupInstance.height() * clipHeight

@@ -5,7 +5,6 @@ import { CLIP_BOTTOM_MARGIN_PX } from "./ui"
 export type clipAdapterParams = {
   clipInstance: ClipInstanceType
   parentTop: number
-  parentInstanceStart: number
   viewStart: number
   pxPerSeconds: number
   clipHeight: number
@@ -15,7 +14,6 @@ export type clipAdapterParams = {
 export function clipAdapter({
   clipInstance,
   parentTop,
-  parentInstanceStart,
   viewStart,
   pxPerSeconds,
   clipHeight,
@@ -31,8 +29,7 @@ export function clipAdapter({
 
   const clip = clipInstance.clip()
 
-  const absoluteStart = parentInstanceStart + clipInstance.start
-  const left = (absoluteStart - viewStart) * pxPerSeconds
+  const left = (clipInstance.start - viewStart) * pxPerSeconds
 
   const width = clip.length * pxPerSeconds
 

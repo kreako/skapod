@@ -28,7 +28,6 @@ function ContentChild({
     const props = groupAdapter({
       groupInstance,
       parentTop: TIMESCALE_HEIGHT_PX,
-      parentInstanceStart: 0,
       viewStart,
       pxPerSeconds,
       clipHeight,
@@ -39,7 +38,6 @@ function ContentChild({
     const props = clipAdapter({
       clipInstance,
       parentTop: TIMESCALE_HEIGHT_PX,
-      parentInstanceStart: 0,
       viewStart,
       pxPerSeconds,
       clipHeight,
