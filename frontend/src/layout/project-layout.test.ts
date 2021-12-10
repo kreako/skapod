@@ -123,7 +123,7 @@ const project = () =>
 
 test("Layout", () => {
   const p = project()
-  const projectLayout = new ProjectLayout(p)
+  const projectLayout = new ProjectLayout(p, 10)
   const context = {
     viewStart: 5,
     viewEnd: 25,
@@ -133,14 +133,14 @@ test("Layout", () => {
   }
   // clip instance "root-0" is on row 0 and from 3.4s to 27.2s
   let layout = projectLayout.localLayoutStyle("root-0", context)
-  expect(layout.top).toBe(0)
+  expect(layout.top).toBe(10)
   expect(layout.left).toBe((3.4 - 5) * 10)
   expect(layout.width).toBe(23.8 * 10)
   expect(layout.height).toBe(100)
 
   // group instance "root-1" is on row 1 and from 1.2s to 20.2s
   layout = projectLayout.localLayoutStyle("root-1", context)
-  expect(layout.top).toBe(100)
+  expect(layout.top).toBe(110)
   expect(layout.left).toBe((1.2 - 5) * 10)
   expect(layout.width).toBe(19 * 10)
   expect(layout.height).toBe(200)

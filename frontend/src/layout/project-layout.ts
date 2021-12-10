@@ -124,10 +124,16 @@ function buildLayoutInfoIndex(
 
 export class ProjectLayout implements ProjectLayoutType {
   project: ProjectType
+  topOffset: number
   layout: LayoutInfoIndexType
 
-  constructor(project: ProjectType) {
+  constructor(
+    project: ProjectType,
+    // in pixel (unit) top offset of each "root" element
+    topOffset: number
+  ) {
     this.project = project
+    this.topOffset = topOffset
     this.layout = buildLayoutInfoIndex(
       null,
       GroupDisplayType.Expanded,
@@ -141,12 +147,14 @@ export class ProjectLayout implements ProjectLayoutType {
   ): LocalLayoutStyleType => {
     // cached info
     const info = this.layout[id]
+    let top = 0
     let left = 0
     if (info.parentId == null) {
       left = -context.viewStart * context.pxPerSeconds
+      top = this.topOffset
     }
     return {
-      top: info.top * context.clipHeight,
+      top: top + info.top * context.clipHeight,
       left: left + info.left * context.pxPerSeconds,
       width: info.width * context.pxPerSeconds,
       height: info.height * context.clipHeight,
