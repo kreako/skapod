@@ -1,21 +1,20 @@
 import { GroupInstanceType } from "../api/group-instance"
 import { ColorType, GroupContentKindType, GroupDisplayType } from "../api/types"
 import { GroupChildProps, GroupProps } from "../components/Group"
+import { LayoutContext, ProjectLayout } from "../layout/project-layout"
 
 export type GroupAdapterParams = {
   groupInstance: GroupInstanceType
-  parentTop: number
-  viewStart: number
-  pxPerSeconds: number
-  clipHeight: number
+  context: LayoutContext
+  layout: ProjectLayout
 }
 
 function produceChildrenProps(
   rootInstance: GroupInstanceType,
   display: GroupDisplayType,
   color: ColorType,
-  pxPerSeconds: number,
-  clipHeight: number
+  context: LayoutContext,
+  layout: ProjectLayout
 ): GroupChildProps[] {
   const children = []
   const root = rootInstance.group()
@@ -23,29 +22,17 @@ function produceChildrenProps(
   for (const content of root.content.content) {
     if (content.kind === GroupContentKindType.Clip) {
       const clipInstance = content.asClipInstance()
-      const clip = clipInstance.clip()
-      let top = null
-      if (
-        display === GroupDisplayType.Collapsed ||
-        rootInstance.display === GroupDisplayType.Collapsed
-      ) {
-        top = 0
-      } else {
-        top = clipHeight * clipInstance.row
-      }
-      const width = Math.floor(clip.length * pxPerSeconds)
-      const left = clipInstance.start * pxPerSeconds
-
+      const layoutInfo = layout.localLayoutStyle(clipInstance.id, context)
       children.push({
         id: content.id(),
         kind: GroupContentKindType.Clip,
         props: {
           id: clipInstance.id,
-          name: clip.name,
-          top,
-          left,
-          width,
-          height: clipHeight,
+          name: clipInstance.clip().name,
+          top: layoutInfo.top,
+          left: layoutInfo.left,
+          width: layoutInfo.width,
+          height: layoutInfo.height,
           color: color,
           muted: clipInstance.muted,
           displayHeader: false, // always off inside a group
@@ -53,31 +40,17 @@ function produceChildrenProps(
       })
     } else {
       const groupInstance = content.asGroupInstance()
-      const group = groupInstance.group()
-      let top = null
-      let height = null
-      if (
-        display === GroupDisplayType.Collapsed ||
-        rootInstance.display === GroupDisplayType.Collapsed
-      ) {
-        top = 0
-        height = clipHeight
-      } else {
-        top = clipHeight * groupInstance.row
-        height = group.expandedHeight() * clipHeight
-      }
-      const width = Math.floor(group.length() * pxPerSeconds)
-      const left = groupInstance.start * pxPerSeconds
+      const layoutInfo = layout.localLayoutStyle(groupInstance.id, context)
       children.push({
         id: content.id(),
         kind: GroupContentKindType.Group,
         props: {
           id: groupInstance.id,
-          name: group.name,
-          top,
-          left,
-          width,
-          height,
+          name: groupInstance.group().name,
+          top: layoutInfo.top,
+          left: layoutInfo.left,
+          width: layoutInfo.width,
+          height: layoutInfo.height,
           color: color,
           muted: groupInstance.muted,
           display: groupInstance.display, // always off inside a group
@@ -86,8 +59,8 @@ function produceChildrenProps(
             groupInstance,
             display,
             color,
-            pxPerSeconds,
-            clipHeight
+            context,
+            layout
           ),
         },
       })
@@ -99,10 +72,8 @@ function produceChildrenProps(
 
 export function groupAdapter({
   groupInstance,
-  parentTop,
-  viewStart,
-  pxPerSeconds,
-  clipHeight,
+  context,
+  layout,
 }: GroupAdapterParams): GroupProps {
   const onMutedClick = () => {
     console.log("onMutedClick")
@@ -114,26 +85,23 @@ export function groupAdapter({
 
   const group = groupInstance.group()
 
-  const left = (groupInstance.start - viewStart) * pxPerSeconds
-  const width = group.length() * pxPerSeconds
-  const top = parentTop + clipHeight * groupInstance.row
-  const height = groupInstance.height() * clipHeight
+  const layoutInfo = layout.localLayoutStyle(groupInstance.id, context)
 
   const children = produceChildrenProps(
     groupInstance,
     groupInstance.display,
     groupInstance.color,
-    pxPerSeconds,
-    clipHeight
+    context,
+    layout
   )
 
   return {
     id: groupInstance.id,
     name: group.name,
-    top: top,
-    left,
-    width,
-    height,
+    top: layoutInfo.top,
+    left: layoutInfo.left,
+    width: layoutInfo.width,
+    height: layoutInfo.height,
     color: groupInstance.color,
     muted: groupInstance.muted,
     display: groupInstance.display,

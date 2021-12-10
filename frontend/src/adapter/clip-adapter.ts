@@ -1,22 +1,18 @@
 import { ClipInstanceType } from "../api/clip-instance"
 import { ClipProps } from "../components/Clip"
-import { CLIP_BOTTOM_MARGIN_PX } from "./ui"
+import { LayoutContext, ProjectLayout } from "../layout/project-layout"
 
 export type clipAdapterParams = {
   clipInstance: ClipInstanceType
-  parentTop: number
-  viewStart: number
-  pxPerSeconds: number
-  clipHeight: number
+  context: LayoutContext
+  layout: ProjectLayout
   displayHeader: boolean
 }
 
 export function clipAdapter({
   clipInstance,
-  parentTop,
-  viewStart,
-  pxPerSeconds,
-  clipHeight,
+  context,
+  layout,
   displayHeader,
 }: clipAdapterParams): ClipProps {
   const onMutedClick = () => {
@@ -27,21 +23,15 @@ export function clipAdapter({
     console.log("onMenuClick")
   }
 
-  const clip = clipInstance.clip()
-
-  const left = (clipInstance.start - viewStart) * pxPerSeconds
-
-  const width = clip.length * pxPerSeconds
-
-  const top = parentTop + clipHeight * clipInstance.row
+  const layoutInfo = layout.localLayoutStyle(clipInstance.id, context)
 
   return {
     id: clipInstance.id,
-    name: clip.name,
-    top: top,
-    left,
-    width,
-    height: clipHeight,
+    name: clipInstance.clip().name,
+    top: layoutInfo.top,
+    left: layoutInfo.left,
+    width: layoutInfo.width,
+    height: layoutInfo.height,
     color: clipInstance.color,
     muted: clipInstance.muted,
     displayHeader: displayHeader,
