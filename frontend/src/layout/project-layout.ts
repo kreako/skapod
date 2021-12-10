@@ -9,8 +9,6 @@ import { GroupContentKindType, GroupDisplayType } from "../api/types"
 export type LayoutContext = {
   // in seconds (unit)
   viewStart: number
-  // in seconds (unit)
-  viewEnd: number
   // in pixel/seconds (unit)
   pxPerSeconds: number
   // in pixel (unit)
