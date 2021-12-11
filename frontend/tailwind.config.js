@@ -5,16 +5,16 @@ module.exports = {
   purge: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
-    colors: {
-      // Build your palette here
-      transparent: "transparent",
-      current: "currentColor",
-      ...colors,
+    extend: {
+      colors: {
+        // Build your palette here
+        transparent: "transparent",
+        current: "currentColor",
+      },
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [require("@tailwindcss/line-clamp"), require("@tailwindcss/forms")],
+  plugins: [require("@tailwindcss/line-clamp")],
 }

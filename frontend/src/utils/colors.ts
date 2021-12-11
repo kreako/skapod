@@ -21,7 +21,7 @@ export const colorToValue = (color: ColorType, level: number): string => {
     case "blue":
       return colors.blue[level]
     case "gray":
-      return colors.blueGray[level]
+      return colors.gray[level]
     case "green":
       return colors.green[level]
     case "yellow":
