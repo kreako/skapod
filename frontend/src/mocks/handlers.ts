@@ -7,6 +7,8 @@ import {
   SourceKindType,
 } from "../api/types"
 
+import { files } from "./bin-files"
+
 const l = (minutes: number, seconds: number) => minutes * 60 + seconds
 
 const sources = {
@@ -273,6 +275,30 @@ export const handlers = [
       return res(ctx.status(200), ctx.json(project))
     }
   ),
+  rest.get("/files/hihat.opus", (req, res, ctx) => {
+    const data = Uint8Array.from(files["hihat.opus"]["data"]).buffer
+    return res(
+      ctx.set("Content-Length", data.byteLength.toString()),
+      ctx.set("Content-Type", "audio/ogg"),
+      ctx.body(data)
+    )
+  }),
+  rest.get("/files/kick.opus", (req, res, ctx) => {
+    const data = Uint8Array.from(files["kick.opus"]["data"]).buffer
+    return res(
+      ctx.set("Content-Length", data.byteLength.toString()),
+      ctx.set("Content-Type", "audio/ogg"),
+      ctx.body(data)
+    )
+  }),
+  rest.get("/files/snare-2.opus", (req, res, ctx) => {
+    const data = Uint8Array.from(files["snare-2.opus"]["data"]).buffer
+    return res(
+      ctx.set("Content-Length", data.byteLength.toString()),
+      ctx.set("Content-Type", "audio/ogg"),
+      ctx.body(data)
+    )
+  }),
   /*rest.patch<PatchDisplayType>(
     "/project/track/:trackId/display",
     (req, res, ctx) => {
