@@ -50,11 +50,6 @@ export default function Group(props: GroupProps) {
     width: `${props.width}px`,
     height: `${props.height}px`,
   }
-  // Unique header id for drag handle
-  // necessary because .header is also a selector for all the .header in this dom hierarchy
-  // including .header of children, so make it "unique" to each group/clip
-  const dragHandleClassName = `header-group-${props.id}`
-  const dragHandleSelector = `.${dragHandleClassName}`
   return (
     <div
       className={`${bg} ${mutedClassName} absolute border border-sky-800 rounded-md z-10 shadow-md overflow-hidden`}
@@ -62,7 +57,6 @@ export default function Group(props: GroupProps) {
     >
       {displayHeader && (
         <ClipGroupHeader
-          handleClassName={dragHandleClassName}
           onMutedClick={props.onMutedClick}
           onMenuClick={props.onMenuClick}
           name={props.name}

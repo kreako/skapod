@@ -1,7 +1,6 @@
 import { FaEllipsisV, FaVolumeMute } from "react-icons/fa"
 
 type ClipHeaderProps = {
-  handleClassName?: string
   name: string
   width: number
   muted: boolean
@@ -13,7 +12,6 @@ export function ClipGroupHeader({
   name,
   width,
   muted,
-  handleClassName,
   onMutedClick,
   onMenuClick,
 }: ClipHeaderProps) {
@@ -27,17 +25,13 @@ export function ClipGroupHeader({
             <FaVolumeMute className="h-4 w-4" />
           </button>
         )}
-        <div
-          className={`line-clamp-1 flex-grow cursor-move ${handleClassName}`}
-        >
-          {name}
-        </div>
+        <div className="line-clamp-1 flex-grow">{name}</div>
         <button onClick={onMenuClick} className="flex-grow-0">
           <FaEllipsisV className="h-4 w-4" />
         </button>
       </div>
     )
   } else {
-    return <div className={`h-6 ${handleClassName}`} />
+    return <div className="h-6" />
   }
 }

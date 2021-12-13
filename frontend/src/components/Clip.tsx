@@ -31,11 +31,6 @@ export default function Clip(props: ClipProps) {
     width: `${props.width}px`,
     height: `${props.height}px`,
   }
-  // Unique header id for drag handle
-  // necessary because .header is also a selector for all the .header in this dom hierarchy
-  // including .header of children, so make it "unique" to each group/clip
-  const dragHandleClassName = `header-clip-${props.id}`
-  const dragHandleSelector = `.${dragHandleClassName}`
 
   const borderClassName = props.width < 3 ? "border-l" : "border "
   return (
@@ -45,7 +40,6 @@ export default function Clip(props: ClipProps) {
     >
       {displayHeader && (
         <ClipGroupHeader
-          handleClassName={dragHandleClassName}
           onMutedClick={props.onMutedClick}
           onMenuClick={props.onMenuClick}
           name={props.name}
