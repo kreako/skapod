@@ -1,4 +1,3 @@
-import Draggable from "react-draggable"
 import { ColorType, GroupContentKindType, GroupDisplayType } from "../api/types"
 import { colorToBgClassName } from "../utils/colors"
 import Clip, { ClipProps } from "./Clip"
@@ -57,35 +56,33 @@ export default function Group(props: GroupProps) {
   const dragHandleClassName = `header-group-${props.id}`
   const dragHandleSelector = `.${dragHandleClassName}`
   return (
-    <Draggable handle={dragHandleSelector}>
-      <div
-        className={`${bg} ${mutedClassName} absolute border border-sky-800 rounded-md z-10 shadow-md overflow-hidden`}
-        style={style}
-      >
-        {displayHeader && (
-          <ClipGroupHeader
-            handleClassName={dragHandleClassName}
-            onMutedClick={props.onMutedClick}
-            onMenuClick={props.onMenuClick}
-            name={props.name}
+    <div
+      className={`${bg} ${mutedClassName} absolute border border-sky-800 rounded-md z-10 shadow-md overflow-hidden`}
+      style={style}
+    >
+      {displayHeader && (
+        <ClipGroupHeader
+          handleClassName={dragHandleClassName}
+          onMutedClick={props.onMutedClick}
+          onMenuClick={props.onMenuClick}
+          name={props.name}
+          width={props.width}
+          muted={props.muted}
+        />
+      )}
+      <div className="absolute inset-0 z-0">
+        {props.display === GroupDisplayType.Collapsed ? (
+          <WaveCanvas
             width={props.width}
-            muted={props.muted}
+            height={props.height}
+            color={props.color}
           />
+        ) : (
+          props.children.map((child) => (
+            <GroupChild key={child.id} {...child} />
+          ))
         )}
-        <div className="absolute inset-0 z-0">
-          {props.display === GroupDisplayType.Collapsed ? (
-            <WaveCanvas
-              width={props.width}
-              height={props.height}
-              color={props.color}
-            />
-          ) : (
-            props.children.map((child) => (
-              <GroupChild key={child.id} {...child} />
-            ))
-          )}
-        </div>
       </div>
-    </Draggable>
+    </div>
   )
 }

@@ -1,4 +1,3 @@
-import Draggable from "react-draggable"
 import { ColorType } from "../api/types"
 import { colorToBgClassName } from "../utils/colors"
 import { ClipGroupHeader } from "./ClipGroupHeader"
@@ -40,29 +39,27 @@ export default function Clip(props: ClipProps) {
 
   const borderClassName = props.width < 3 ? "border-l" : "border "
   return (
-    <Draggable handle={dragHandleSelector}>
-      <div
-        className={`${bg} ${mutedClassName} ${borderClassName} border-sky-800 absolute rounded-md z-10 shadow-md overflow-hidden`}
-        style={style}
-      >
-        {displayHeader && (
-          <ClipGroupHeader
-            handleClassName={dragHandleClassName}
-            onMutedClick={props.onMutedClick}
-            onMenuClick={props.onMenuClick}
-            name={props.name}
-            width={props.width}
-            muted={props.muted}
-          />
-        )}
-        <div className="absolute inset-0 z-0">
-          <WaveCanvas
-            width={props.width - 2}
-            height={props.height}
-            color={props.color}
-          />
-        </div>
+    <div
+      className={`${bg} ${mutedClassName} ${borderClassName} border-sky-800 absolute rounded-md z-10 shadow-md overflow-hidden`}
+      style={style}
+    >
+      {displayHeader && (
+        <ClipGroupHeader
+          handleClassName={dragHandleClassName}
+          onMutedClick={props.onMutedClick}
+          onMenuClick={props.onMenuClick}
+          name={props.name}
+          width={props.width}
+          muted={props.muted}
+        />
+      )}
+      <div className="absolute inset-0 z-0">
+        <WaveCanvas
+          width={props.width - 2}
+          height={props.height}
+          color={props.color}
+        />
       </div>
-    </Draggable>
+    </div>
   )
 }
